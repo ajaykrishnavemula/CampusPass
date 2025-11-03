@@ -108,7 +108,7 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/ajaykrishna-125/CampusPass.git
+git clone https://github.com/ajaykrishnavemula/CampusPass.git
 cd CampusPass/backend
 ```
 
@@ -605,8 +605,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Authors
 
 **Ajay Krishna**
-- Email: ajaykrishnavemula125@gmail.com
-- GitHub: [@ajaykrishna-125](https://github.com/ajaykrishna-125)
+- Email: ajaykrishnatech@gmail.com
+- GitHub: [@ajaykrishnavemula](https://github.com/ajaykrishnavemula)
 
 ---
 
@@ -622,8 +622,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For support and questions:
-- **Email**: ajaykrishnavemula125@gmail.com
-- **Issues**: [GitHub Issues](https://github.com/ajaykrishna-125/CampusPass/issues)
+- **Email**: ajaykrishnatech@gmail.com
+- **Issues**: [GitHub Issues](https://github.com/ajaykrishnavemula/CampusPass/issues)
 - **Documentation**: See the `/docs` folder for detailed guides
 
 ---

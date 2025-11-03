@@ -1,6 +1,5 @@
 /**
- * @author AjayKrishna
- * @summary Input validation schemas using Joi
+ * Input validation schemas using Joi
  */
 
 import Joi from 'joi';
@@ -382,5 +381,3 @@ export default {
   isFutureDate,
   isWithinDateRange,
 };
-
-// Made with Bob

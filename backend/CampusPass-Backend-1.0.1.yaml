@@ -3,7 +3,7 @@ info:
   title: CampusPass Backend API - OpenAPI 3.0
   description: CampusPass Backend API Documentation
   contact:
-    email: ajaykrishnavemula125@gmail.com
+    email: ajaykrishnatech@gmail.com
   version: 1.0.1
 servers:
   - url: http://localhost:3000/api/v1

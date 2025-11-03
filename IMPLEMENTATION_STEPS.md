@@ -911,7 +911,7 @@ If you encounter issues:
 2. Review the [QUICK_START_IMPLEMENTATION_GUIDE.md](QUICK_START_IMPLEMENTATION_GUIDE.md)
 3. Consult the [PROJECT_INDEX.md](PROJECT_INDEX.md)
 4. Open an issue on GitHub
-5. Contact: ajaykrishnavemula125@gmail.com
+5. Contact: ajaykrishnatech@gmail.com
 
 ---
 

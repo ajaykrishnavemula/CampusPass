@@ -46,7 +46,7 @@ We are committed to providing a welcoming and inclusive environment for all cont
 
 ### Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at ajaykrishnavemula125@gmail.com. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at ajaykrishnatech@gmail.com. All complaints will be reviewed and investigated promptly and fairly.
 
 ---
 
@@ -65,7 +65,7 @@ Before contributing, ensure you have:
 
 If you're new to open source:
 1. Read the [README.md](README.md) to understand the project
-2. Check out [good first issues](https://github.com/ajaykrishna-125/CampusPass/labels/good%20first%20issue)
+2. Check out [good first issues](https://github.com/ajaykrishnavemula/CampusPass/labels/good%20first%20issue)
 3. Join our community discussions
 4. Ask questions - we're here to help!
 
@@ -87,7 +87,7 @@ cd CampusPass/backend
 ### 3. Add Upstream Remote
 
 ```bash
-git remote add upstream https://github.com/ajaykrishna-125/CampusPass.git
+git remote add upstream https://github.com/ajaykrishnavemula/CampusPass.git
 ```
 
 ### 4. Install Dependencies
@@ -592,7 +592,7 @@ When adding new features, update:
 ### Getting Help
 
 - **GitHub Issues**: For bugs and feature requests
-- **Email**: ajaykrishnavemula125@gmail.com
+- **Email**: ajaykrishnatech@gmail.com
 - **Discussions**: GitHub Discussions (coming soon)
 
 ### Recognition

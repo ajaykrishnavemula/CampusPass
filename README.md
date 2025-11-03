@@ -448,7 +448,7 @@ We welcome contributions! Please see our [Contributing Guidelines](backend/CONTR
 ### Reporting Security Issues
 
 If you discover a security vulnerability, please email:
-**ajaykrishnavemula125@gmail.com**
+**ajaykrishnatech@gmail.com**
 
 Do not create public GitHub issues for security vulnerabilities.
 
@@ -518,7 +518,7 @@ See [COMPREHENSIVE_ENHANCEMENT_PLAN.md](COMPREHENSIVE_ENHANCEMENT_PLAN.md) for d
 
 ### Developer
 **Ajay Krishna**
-- Email: ajaykrishnavemula125@gmail.com
+- Email: ajaykrishnatech@gmail.com
 - GitHub: [@ajaykrishnavemula](https://github.com/ajaykrishnavemula)
 
 ### Getting Help

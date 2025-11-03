@@ -7,8 +7,8 @@
 ### Project Information
 - **Name**: CampusPass-Portal
 - **Version**: 1.0.0
-- **Repository**: https://github.com/ajaykrishna-125/CampusPass-
-- **Author**: Ajay Krishna <ajaykrishnavemula125@gmail.com>
+- **Repository**: https://github.com/ajaykrishnavemula/CampusPass-
+- **Author**: Ajay Krishna <ajaykrishnatech@gmail.com>
 - **License**: MIT
 - **Framework**: Fastify v4.12.0
 - **Language**: TypeScript
