@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Pass - System Architecture & Workflow Diagrams</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; color: #333; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        header p { font-size: 1.2em; opacity: 0.9; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 60px; page-break-inside: avoid; }
+        .section-title { font-size: 2em; color: #667eea; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+        .diagram-container { background: #f8f9fa; border-radius: 15px; padding: 30px; margin-bottom: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); page-break-inside: avoid; }
+        .diagram-title { font-size: 1.5em; color: #333; margin-bottom: 20px; font-weight: 600; }
+        svg { width: 100%; height: auto; display: block; }
+        .description { background: #e3f2fd; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #2196f3; }
+        .description h3 { color: #1976d2; margin-bottom: 10px; }
+        .description ul { margin-left: 20px; line-height: 1.8; }
+        .info-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .info-box h4 { color: #856404; margin-bottom: 8px; }
+        .info-box p { color: #856404; line-height: 1.6; }
+        @media print { body { background: white; } .container { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Campus Pass System</h1>
+            <p>Complete Architecture & Workflow Diagrams</p>
+        </header>
+
+        <div class="content">
+            <!-- SECTION 1: SYSTEM ARCHITECTURE -->
+            <div class="section">
+                <h2 class="section-title">📐 1. System Architecture</h2>
+
+                <!-- 1.1 Layered Architecture -->
+                <div class="diagram-container">
+                    <h3 class="diagram-title">1.1 Layered Architecture (N-Tier)</h3>
+                    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                                <polygon points="0 0, 10 5, 0 10" fill="#333"/>
+                            </marker>
+                        </defs>
+                        <rect x="50" y="50" width="1100" height="100" fill="#4CAF50" rx="10"/>
+                        <text x="600" y="90" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Presentation Layer</text>
+                        <text x="600" y="120" text-anchor="middle" fill="white" font-size="18">React + TypeScript + Tailwind CSS</text>
+                        <path d="M 600 150 L 600 180" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+                        
+                        <rect x="50" y="180" width="1100" height="100" fill="#2196F3" rx="10"/>
+                        <text x="600" y="220" text-anchor="middle" fill="white" font-size="24" font-weight="bold">API Layer</text>
+                        <text x="600" y="250" text-anchor="middle" fill="white" font-size="18">Fastify Routes + Middleware (Auth, CORS, Rate Limit)</text>
+                        <path d="M 600 280 L 600 310" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+                        
+                        <rect x="50" y="310" width="1100" height="100" fill="#FF9800" rx="10"/>
+                        <text x="600" y="350" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Business Logic Layer</text>
+                        <text x="600" y="380" text-anchor="middle" fill="white" font-size="18">Service Classes (Auth, Student, Warden, Admin, Security)</text>
+                        <path d="M 600 410 L 600 440" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+                        
+                        <rect x="50" y="440" width="1100" height="100" fill="#9C27B0" rx="10"/>
+                        <text x="600" y="480" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Data Access Layer</text>
+                        <text x="600" y="510" text-anchor="middle" fill="white" font-size="18">Mongoose Models (User, Outpass, Hostel, Notification)</text>
+                        <path d="M 600 540 L 600 570" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+                        
+                        <rect x="50" y="570" width="1100" height="100" fill="#607D8B" rx="10"/>
+                        <text x="600" y="610" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Database Layer</text>
+                        <text x="600" y="640" text-anchor="middle" fill="white" font-size="18">MongoDB (8 Collections)</text>
+                    </svg>
+                    <div class="description">
+                        <h3>Key Benefits:</h3>
+                        <ul>
+                            <li><strong>Separation of Concerns:</strong> Each layer has a specific responsibility</li>
+                            <li><strong>Maintainability:</strong> Changes in one layer don't affect others</li>
+                            <li><strong>Testability:</strong> Each layer can be tested independently</li>
+                            <li><strong>Scalability:</strong> Layers can be scaled independently</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 1.2 Technology Stack -->
+                <div class="diagram-container">
+                    <h3 class="diagram-title">1.2 Technology Stack</h3>
+                    <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="50" width="350" height="500" fill="#E8F5E9" stroke="#4CAF50" stroke-width="3" rx="10"/>
+                        <text x="225" y="90" text-anchor="middle" font-size="24" font-weight="bold" fill="#2E7D32">Frontend Stack</text>
+                        <rect x="80" y="120" width="290" height="60" fill="#4CAF50" rx="5"/>
+                        <text x="225" y="155" text-anchor="middle" fill="white" font-size="18" font-weight="bold">React 18</text>
+                        <rect x="80" y="200" width="290" height="60" fill="#2196F3" rx="5"/>
+                        <text x="225" y="235" text-anchor="middle" fill="white" font-size="18" font-weight="bold">TypeScript</text>
+                        <rect x="80" y="280" width="290" height="60" fill="#00BCD4" rx="5"/>
+                        <text x="225" y="315" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Tailwind CSS</text>
+                        <rect x="80" y="360" width="290" height="60" fill="#FF9800" rx="5"/>
+                        <text x="225" y="395" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Zustand</text>
+                        <rect x="80" y="440" width="290" height="60" fill="#9C27B0" rx="5"/>
+                        <text x="225" y="475" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Axios + Socket.IO</text>
+                        
+                        <rect x="450" y="50" width="350" height="500" fill="#FFF3E0" stroke="#FF9800" stroke-width="3" rx="10"/>
+                        <text x="625" y="90" text-anchor="middle" font-size="24" font-weight="bold" fill="#E65100">Backend Stack</text>
+                        <rect x="480" y="120" width="290" height="60" fill="#68A063" rx="5"/>
+                        <text x="625" y="155" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Node.js</text>
+                        <rect x="480" y="200" width="290" height="60" fill="#000000" rx="5"/>
+                        <text x="625" y="235" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Fastify</text>
+                        <rect x="480" y="280" width="290" height="60" fill="#2196F3" rx="5"/>
+                        <text x="625" y="315" text-anchor="middle" fill="white" font-size="18" font-weight="bold">TypeScript</text>
+                        <rect x="480" y="360" width="290" height="60" fill="#47A248" rx="5"/>
+                        <text x="625" y="395" text-anchor="middle" fill="white" font-size="18" font-weight="bold">MongoDB</text>
+                        <rect x="480" y="440" width="290" height="60" fill="#010101" rx="5"/>
+                        <text x="625" y="475" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Socket.IO</text>
+                        
+                        <rect x="850" y="50" width="300" height="500" fill="#F3E5F5" stroke="#9C27B0" stroke-width="3" rx="10"/>
+                        <text x="1000" y="90" text-anchor="middle" font-size="24" font-weight="bold" fill="#6A1B9A">Tools & Libraries</text>
+                        <rect x="880" y="120" width="240" height="50" fill="#FF5722" rx="5"/>
+                        <text x="1000" y="150" text-anchor="middle" fill="white" font-size="16" font-weight="bold">JWT</text>
+                        <rect x="880" y="185" width="240" height="50" fill="#795548" rx="5"/>
+                        <text x="1000" y="215" text-anchor="middle" fill="white" font-size="16" font-weight="bold">bcrypt</text>
+                        <rect x="880" y="250" width="240" height="50" fill="#607D8B" rx="5"/>
+                        <text x="1000" y="280" text-anchor="middle" fill="white" font-size="16" font-weight="bold">QRCode</text>
+                        <rect x="880" y="315" width="240" height="50" fill="#E91E63" rx="5"/>
+                        <text x="1000" y="345" text-anchor="middle" fill="white" font-size="16" font-weight="bold">PDFKit</text>
+                        <rect x="880" y="380" width="240" height="50" fill="#3F51B5" rx="5"/>
+                        <text x="1000" y="410" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Winston</text>
+                        <rect x="880" y="445" width="240" height="50" fill="#009688" rx="5"/>
+                        <text x="1000" y="475" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Recharts</text>
+                    </svg>
+                </div>
+
+                <!-- 1.3 Database Schema -->
+                <div class="diagram-container">
+                    <h3 class="diagram-title">1.3 Database Schema (MongoDB Collections)</h3>
+                    <svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="50" width="250" height="160" fill="#4CAF50" stroke="#2E7D32" stroke-width="2" rx="5"/>
+                        <text x="175" y="80" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Users</text>
+                        <line x1="60" y1="95" x2="290" y2="95" stroke="white" stroke-width="2"/>
+                        <text x="70" y="120" fill="white" font-size="14">• email (unique)</text>
+                        <text x="70" y="145" fill="white" font-size="14">• password (hashed)</text>
+                        <text x="70" y="170" fill="white" font-size="14">• role (enum)</text>
+                        <text x="70" y="195" fill="white" font-size="14">• hostel, canCreateOutpass</text>
+                        
+                        <rect x="400" y="50" width="250" height="200" fill="#2196F3" stroke="#1976D2" stroke-width="2" rx="5"/>
+                        <text x="525" y="80" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Outpasses</text>
+                        <line x1="410" y1="95" x2="640" y2="95" stroke="white" stroke-width="2"/>
+                        <text x="420" y="120" fill="white" font-size="14">• student (ref User)</text>
+                        <text x="420" y="145" fill="white" font-size="14">• reason, destination</text>
+                        <text x="420" y="170" fill="white" font-size="14">• fromDate, toDate</text>
+                        <text x="420" y="195" fill="white" font-size="14">• status (enum)</text>
+                        <text x="420" y="220" fill="white" font-size="14">• warden (ref), qrCode</text>
+                        
+                        <rect x="750" y="50" width="250" height="120" fill="#FF9800" stroke="#E65100" stroke-width="2" rx="5"/>
+                        <text x="875" y="80" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Hostels</text>
+                        <line x1="760" y1="95" x2="990" y2="95" stroke="white" stroke-width="2"/>
+                        <text x="770" y="120" fill="white" font-size="14">• name (unique)</text>
+                        <text x="770" y="145" fill="white" font-size="14">• warden (ref User)</text>
+                        
+                        <rect x="50" y="280" width="250" height="160" fill="#9C27B0" stroke="#6A1B9A" stroke-width="2" rx="5"/>
+                        <text x="175" y="310" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Notifications</text>
+                        <line x1="60" y1="325" x2="290" y2="325" stroke="white" stroke-width="2"/>
+                        <text x="70" y="350" fill="white" font-size="14">• user (ref User)</text>
+                        <text x="70" y="375" fill="white" font-size="14">• type, title, message</text>
+                        <text x="70" y="400" fill="white" font-size="14">• isRead</text>
+                        
+                        <rect x="400" y="320" width="250" height="160" fill="#607D8B" stroke="#455A64" stroke-width="2" rx="5"/>
+                        <text x="525" y="350" text-anchor="middle" fill="white" font-size="20" font-weight="bold">SecurityLog</text>
+                        <line x1="410" y1="365" x2="640" y2="365" stroke="white" stroke-width="2"/>
+                        <text x="420" y="390" fill="white" font-size="14">• outpass (ref)</text>
+                        <text x="420" y="415" fill="white" font-size="14">• security (ref User)</text>
+                        <text x="420" y="440" fill="white" font-size="14">• action, timestamp</text>
+                        
+                        <rect x="750" y="240" width="250" height="120" fill="#00BCD4" stroke="#0097A7" stroke-width="2" rx="5"/>
+                        <text x="875" y="270" text-anchor="middle" fill="white" font-size="20" font-weight="bold">SystemSettings</text>
+                        <line x1="760" y1="285" x2="990" y2="285" stroke="white" stroke-width="2"/>
+                        <text x="770" y="310" fill="white" font-size="14">• isActive</text>
+                        <text x="770" y="335" fill="white" font-size="14">• reason, updatedBy</text>
+                        
+                        <rect x="50" y="510" width="250" height="120" fill="#E91E63" stroke="#C2185B" stroke-width="2" rx="5"/>
+                        <text x="175" y="540" text-anchor="middle" fill="white" font-size="20" font-weight="bold">StudentOverride</text>
+                        <line x1="60" y1="555" x2="290" y2="555" stroke="white" stroke-width="2"/>
+                        <text x="70" y="580" fill="white" font-size="14">• student, admin (refs)</text>
+                        <text x="70" y="605" fill="white" font-size="14">• reason</text>
+                        
+                        <rect x="400" y="550" width="250" height="120" fill="#795548" stroke="#5D4037" stroke-width="2" rx="5"/>
+                        <text x="525" y="580" text-anchor="middle" fill="white" font-size="20" font-weight="bold">AdminActionLog</text>
+                        <line x1="410" y1="595" x2="640" y2="595" stroke="white" stroke-width="2"/>
+                        <text x="420" y="620" fill="white" font-size="14">• admin (ref User)</text>
+                        <text x="420" y="645" fill="white" font-size="14">• action, details</text>
+                        
+                        <path d="M 300 130 L 400 130" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="350" y="120" text-anchor="middle" font-size="12" fill="#333">creates</text>
+                        <path d="M 525 250 L 525 320" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="545" y="285" font-size="12" fill="#333">logs</text>
+                    </svg>
+                    <div class="info-box">
+                        <h4>Database Indexing Strategy:</h4>
+                        <p><strong>Users:</strong> email (unique), role | <strong>Outpasses:</strong> student, status, createdAt (desc) | <strong>Hostels:</strong> name (unique) | <strong>Notifications:</strong> user, isRead, createdAt (desc)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: WORKFLOWS -->
+            <div class="section">
+                <h2 class="section-title">🔄 2. System Workflows</h2>
+
+                <!-- 2.1 Outpass Creation -->
+                <div class="diagram-container">
+                    <h3 class="diagram-title">2.1 Outpass Creation & Approval Workflow</h3>
+                    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="50" width="200" height="80" fill="#4CAF50" rx="10"/>
+                        <text x="150" y="95" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Student</text>
+                        <rect x="50" y="170" width="200" height="60" fill="#81C784" rx="5"/>
+                        <text x="150" y="205" text-anchor="middle" fill="white" font-size="16">Create Outpass</text>
+                        <path d="M 150 130 L 150 170" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <path d="M 250 200 L 400 200" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="325" y="190" text-anchor="middle" font-size="14" fill="#666">POST /api/student/outpasses</text>
+                        
+                        <rect x="400" y="50" width="200" height="80" fill="#2196F3" rx="10"/>
+                        <text x="500" y="95" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Backend</text>
+                        <rect x="400" y="170" width="200" height="60" fill="#64B5F6" rx="5"/>
+                        <text x="500" y="195" text-anchor="middle" fill="white" font-size="14">Validate Request</text>
+                        <text x="500" y="215" text-anchor="middle" fill="white" font-size="12">(System, permissions)</text>
+                        <path d="M 500 230 L 500 270" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="400" y="270" width="200" height="60" fill="#64B5F6" rx="5"/>
+                        <text x="500" y="295" text-anchor="middle" fill="white" font-size="14">Create Outpass</text>
+                        <text x="500" y="315" text-anchor="middle" fill="white" font-size="12">(Status: Pending)</text>
+                        <path d="M 500 330 L 500 370" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="400" y="370" width="200" height="60" fill="#64B5F6" rx="5"/>
+                        <text x="500" y="405" text-anchor="middle" fill="white" font-size="14">Notify Warden</text>
+                        <path d="M 600 400 L 750 400" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="675" y="390" text-anchor="middle" font-size="14" fill="#666">WebSocket</text>
+                        
+                        <rect x="750" y="50" width="200" height="80" fill="#FF9800" rx="10"/>
+                        <text x="850" y="95" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Warden</text>
+                        <rect x="750" y="170" width="200" height="60" fill="#FFB74D" rx="5"/>
+                        <text x="850" y="205" text-anchor="middle" fill="white" font-size="16">Receive Notification</text>
+                        <path d="M 850 230 L 850 270" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="750" y="270" width="200" height="60" fill="#FFB74D" rx="5"/>
+                        <text x="850" y="305" text-anchor="middle" fill="white" font-size="16">Review Outpass</text>
+                        <path d="M 850 330 L 850 370" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <path d="M 850 370 L 920 420 L 850 470 L 780 420 Z" fill="#FFA726" stroke="#E65100" stroke-width="2"/>
+                        <text x="850" y="425" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Approve?</text>
+                        
+                        <path d="M 920 420 L 1000 420" stroke="#4CAF50" stroke-width="3" marker-end="url(#arrow)"/>
+                        <text x="960" y="410" text-anchor="middle" font-size="14" fill="#4CAF50" font-weight="bold">Yes</text>
+                        <rect x="1000" y="390" width="150" height="60" fill="#4CAF50" rx="5"/>
+                        <text x="1075" y="415" text-anchor="middle" fill="white" font-size="14">Generate QR</text>
+                        <text x="1075" y="435" text-anchor="middle" fill="white" font-size="14">Notify Student</text>
+                        
+                        <path d="M 850 470 L 850 530" stroke="#F44336" stroke-width="3" marker-end="url(#arrow)"/>
+                        <text x="870" y="500" text-anchor="middle" font-size="14" fill="#F44336" font-weight="bold">No</text>
+                        <rect x="775" y="530" width="150" height="60" fill="#F44336" rx="5"/>
+                        <text x="850" y="555" text-anchor="middle" fill="white" font-size="14">Reject</text>
+                        <text x="850" y="575" text-anchor="middle" fill="white" font-size="14">Notify Student</text>
+                        
+                        <ellipse cx="500" cy="680" rx="100" ry="60" fill="#607D8B"/>
+                        <text x="500" y="675" text-anchor="middle" fill="white" font-size="18" font-weight="bold">MongoDB</text>
+                        <text x="500" y="695" text-anchor="middle" fill="white" font-size="14">Outpass Collection</text>
+                        <path d="M 500 430 L 500 620" stroke="#333" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                    </svg>
+                    <div class="description">
+                        <h3>Workflow Steps:</h3>
+                        <ul>
+                            <li><strong>Step 1:</strong> Student fills outpass form (reason, destination, dates)</li>
+                            <li><strong>Step 2:</strong> Backend validates (system active, user permissions, overdue count)</li>
+                            <li><strong>Step 3:</strong> Outpass created with status "pending"</li>
+                            <li><strong>Step 4:</strong> Warden receives real-time notification via WebSocket</li>
+                            <li><strong>Step 5:</strong> Warden reviews and approves/rejects</li>
+                            <li><strong>Step 6:</strong> If approved, QR code generated and student notified</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2.2 Security Check -->
+                <div class="diagram-container">
+                    <h3 class="diagram-title">2.2 Security Check-in/Check-out Workflow</h3>
+                    <svg viewBox="0 0 1200 850" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Security Guard -->
+                        <rect x="50" y="50" width="200" height="80" fill="#9C27B0" rx="10"/>
+                        <text x="150" y="95" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Security</text>
+                        
+                        <!-- Scan QR -->
+                        <rect x="50" y="170" width="200" height="60" fill="#BA68C8" rx="5"/>
+                        <text x="150" y="205" text-anchor="middle" fill="white" font-size="16">Scan QR Code</text>
+                        <path d="M 150 130 L 150 170" stroke="#9C27B0" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <!-- Arrow to Backend -->
+                        <path d="M 250 200 L 400 200" stroke="#9C27B0" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="325" y="190" text-anchor="middle" font-size="14" fill="#666">POST /api/security/validate-qr</text>
+                        
+                        <!-- Backend -->
+                        <rect x="400" y="50" width="200" height="80" fill="#2196F3" rx="10"/>
+                        <text x="500" y="95" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Backend</text>
+                        
+                        <rect x="400" y="170" width="200" height="60" fill="#64B5F6" rx="5"/>
+                        <text x="500" y="195" text-anchor="middle" fill="white" font-size="14">Decode QR</text>
+                        <text x="500" y="215" text-anchor="middle" fill="white" font-size="12">Extract Outpass ID</text>
+                        
+                        <path d="M 500 230 L 500 270" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <rect x="400" y="270" width="200" height="60" fill="#64B5F6" rx="5"/>
+                        <text x="500" y="295" text-anchor="middle" fill="white" font-size="14">Validate Outpass</text>
+                        <text x="500" y="315" text-anchor="middle" fill="white" font-size="12">(Status, Dates, Student)</text>
+                        
+                        <path d="M 500 330 L 500 370" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <!-- Decision Diamond -->
+                        <path d="M 500 370 L 570 420 L 500 470 L 430 420 Z" fill="#42A5F5" stroke="#1976D2" stroke-width="2"/>
+                        <text x="500" y="425" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Valid?</text>
+                        
+                        <!-- Valid Path (Yes) -->
+                        <path d="M 570 420 L 750 420" stroke="#4CAF50" stroke-width="3" marker-end="url(#arrow)"/>
+                        <text x="660" y="410" text-anchor="middle" font-size="14" fill="#4CAF50" font-weight="bold">Yes</text>
+                        
+                        <!-- Check-out Section -->
+                        <rect x="750" y="170" width="200" height="80" fill="#4CAF50" rx="10"/>
+                        <text x="850" y="215" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Check-out</text>
+                        
+                        <path d="M 850 250 L 850 280" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <rect x="750" y="280" width="200" height="60" fill="#66BB6A" rx="5"/>
+                        <text x="850" y="305" text-anchor="middle" fill="white" font-size="14">Update Status</text>
+                        <text x="850" y="325" text-anchor="middle" fill="white" font-size="12">Status: checked_out</text>
+                        
+                        <path d="M 850 340 L 850 370" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <rect x="750" y="370" width="200" height="60" fill="#66BB6A" rx="5"/>
+                        <text x="850" y="395" text-anchor="middle" fill="white" font-size="14">Log Action</text>
+                        <text x="850" y="415" text-anchor="middle" fill="white" font-size="12">SecurityLog.create()</text>
+                        
+                        <!-- Check-in Section -->
+                        <rect x="750" y="480" width="200" height="80" fill="#FF9800" rx="10"/>
+                        <text x="850" y="525" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Check-in</text>
+                        
+                        <path d="M 850 560 L 850 590" stroke="#FF9800" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <rect x="750" y="590" width="200" height="60" fill="#FFB74D" rx="5"/>
+                        <text x="850" y="615" text-anchor="middle" fill="white" font-size="14">Check if Overdue</text>
+                        <text x="850" y="635" text-anchor="middle" fill="white" font-size="12">checkInTime > toDate?</text>
+                        
+                        <path d="M 850 650 L 850 690" stroke="#FF9800" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <!-- Overdue Decision -->
+                        <path d="M 850 690 L 920 740 L 850 790 L 780 740 Z" fill="#FFA726" stroke="#E65100" stroke-width="2"/>
+                        <text x="850" y="745" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Overdue?</text>
+                        
+                        <!-- Overdue Path -->
+                        <path d="M 920 740 L 1000 740" stroke="#F44336" stroke-width="3" marker-end="url(#arrow)"/>
+                        <text x="960" y="730" text-anchor="middle" font-size="14" fill="#F44336" font-weight="bold">Yes</text>
+                        
+                        <rect x="1000" y="710" width="150" height="60" fill="#F44336" rx="5"/>
+                        <text x="1075" y="730" text-anchor="middle" fill="white" font-size="12">overdueCount++</text>
+                        <text x="1075" y="750" text-anchor="middle" fill="white" font-size="12">If count >= 3:</text>
+                        <text x="1075" y="765" text-anchor="middle" fill="white" font-size="12">Restrict user</text>
+                        
+                        <!-- Invalid Path (No) -->
+                        <path d="M 430 420 L 300 420 L 300 550" stroke="#F44336" stroke-width="3" marker-end="url(#arrow)"/>
+                        <text x="365" y="410" text-anchor="middle" font-size="14" fill="#F44336" font-weight="bold">No</text>
+                        
+                        <rect x="225" y="550" width="150" height="60" fill="#F44336" rx="5"/>
+                        <text x="300" y="575" text-anchor="middle" fill="white" font-size="14">Show Error</text>
+                        <text x="300" y="595" text-anchor="middle" fill="white" font-size="12">Invalid QR Code</text>
+                        
+                        <!-- Database -->
+                        <ellipse cx="500" cy="650" rx="100" ry="60" fill="#607D8B"/>
+                        <text x="500" y="645" text-anchor="middle" fill="white" font-size="18" font-weight="bold">MongoDB</text>
+                        <text x="500" y="665" text-anchor="middle" fill="white" font-size="14">Update Records</text>
+                        
+                        <path d="M 600 420 L 600 620 L 550 620" stroke="#607D8B" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                        <text x="620" y="520" font-size="14" fill="#666">Save</text>
+                    </svg>
+                    <div class="description">
+                        <h3>Check-in/Check-out Process:</h3>
+                        <ul>
+                            <li><strong>Check-out:</strong> Security scans QR → Validates outpass → Updates status to "checked_out" → Logs action</li>
+                            <li><strong>Check-in:</strong> Security scans QR → Checks if overdue → Updates status → If overdue, increments count</li>
+                            <li><strong>Auto-restriction:</strong> If student has 3+ overdue returns, automatically set canCreateOutpass = false</li>
+                            <li><strong>Real-time updates:</strong> Student receives notification immediately via WebSocket</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2.3 Data Flow -->
+                <div class="diagram-container">
+                    <h3 class="diagram-title">2.3 Complete Data Flow Diagram</h3>
+                    <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="50" width="150" height="80" fill="#4CAF50" rx="10"/>
+                        <text x="125" y="95" text-anchor="middle" fill="white" font-size="18" font-weight="bold">User Interface</text>
+                        <path d="M 200 90 L 300 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="250" y="80" text-anchor="middle" font-size="12" fill="#666">HTTP Request</text>
+                        
+                        <rect x="300" y="50" width="150" height="80" fill="#2196F3" rx="10"/>
+                        <text x="375" y="85" text-anchor="middle" fill="white" font-size="16" font-weight="bold">API Gateway</text>
+                        <text x="375" y="105" text-anchor="middle" fill="white" font-size="12">(Fastify)</text>
+                        <path d="M 450 90 L 550 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="500" y="80" text-anchor="middle" font-size="12" fill="#666">Middleware</text>
+                        
+                        <rect x="550" y="50" width="150" height="80" fill="#FF9800" rx="10"/>
+                        <text x="625" y="85" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Business Logic</text>
+                        <text x="625" y="105" text-anchor="middle" fill="white" font-size="12">(Services)</text>
+                        <path d="M 700 90 L 800 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="750" y="80" text-anchor="middle" font-size="12" fill="#666">Query</text>
+                        
+                        <rect x="800" y="50" width="150" height="80" fill="#9C27B0" rx="10"/>
+                        <text x="875" y="85" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Data Layer</text>
+                        <text x="875" y="105" text-anchor="middle" fill="white" font-size="12">(Mongoose)</text>
+                        <path d="M 950 90 L 1050 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="1000" y="80" text-anchor="middle" font-size="12" fill="#666">CRUD</text>
+                        
+                        <rect x="1050" y="50" width="100" height="80" fill="#607D8B" rx="10"/>
+                        <text x="1100" y="85" text-anchor="middle" fill="white" font-size="16" font-weight="bold">MongoDB</text>
+                        
+                        <path d="M 1050 90 L 950 90" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="1000" y="110" text-anchor="middle" font-size="12" fill="#4CAF50">Data</text>
+                        <path d="M 800 90 L 700 90" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="750" y="110" text-anchor="middle" font-size="12" fill="#4CAF50">Result</text>
+                        <path d="M 550 90 L 450 90" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="500" y="110" text-anchor="middle" font-size="12" fill="#4CAF50">Response</text>
+                        <path d="M 300 90 L 200 90" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="250" y="110" text-anchor="middle" font-size="12" fill="#4CAF50">JSON</text>
+                        
+                        <rect x="50" y="250" width="150" height="80" fill="#E91E63" rx="10"/>
+                        <text x="125" y="285" text-anchor="middle" fill="white" font-size="16" font-weight="bold">WebSocket</text>
+                        <text x="125" y="305" text-anchor="middle" fill="white" font-size="12">(Socket.IO)</text>
+                        <path d="M 200 290 L 300 290" stroke="#9C27B0" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="250" y="280" text-anchor="middle" font-size="12" fill="#9C27B0">Real-time</text>
+                        
+                        <rect x="300" y="250" width="150" height="80" fill="#00BCD4" rx="10"/>
+                        <text x="375" y="285" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Notification</text>
+                        <text x="375" y="305" text-anchor="middle" fill="white" font-size="12">Service</text>
+                        <path d="M 450 290 L 550 290" stroke="#9C27B0" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="500" y="280" text-anchor="middle" font-size="12" fill="#9C27B0">Emit</text>
+                        
+                        <rect x="550" y="250" width="150" height="80" fill="#795548" rx="10"/>
+                        <text x="625" y="285" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Event Handler</text>
+                        <text x="625" y="305" text-anchor="middle" fill="white" font-size="12">(Backend)</text>
+                        
+                        <rect x="50" y="450" width="200" height="100" fill="#FFF3E0" stroke="#FF9800" stroke-width="2" rx="10"/>
+                        <text x="150" y="480" text-anchor="middle" font-size="16" font-weight="bold" fill="#E65100">Authentication Flow</text>
+                        <text x="150" y="505" text-anchor="middle" font-size="12" fill="#666">1. Login Request</text>
+                        <text x="150" y="525" text-anchor="middle" font-size="12" fill="#666">2. JWT Token Generated</text>
+                        <text x="150" y="545" text-anchor="middle" font-size="12" fill="#666">3. Token in Headers</text>
+                        
+                        <rect x="300" y="450" width="200" height="100" fill="#E8F5E9" stroke="#4CAF50" stroke-width="2" rx="10"/>
+                        <text x="400" y="480" text-anchor="middle" font-size="16" font-weight="bold" fill="#2E7D32">Authorization Flow</text>
+                        <text x="400" y="505" text-anchor="middle" font-size="12" fill="#666">1. Verify JWT Token</text>
+                        <text x="400" y="525" text-anchor="middle" font-size="12" fill="#666">2. Check User Role</text>
+                        <text x="400" y="545" text-anchor="middle" font-size="12" fill="#666">3. Grant/Deny Access</text>
+                        
+                        <rect x="550" y="450" width="200" height="100" fill="#F3E5F5" stroke="#9C27B0" stroke-width="2" rx="10"/>
+                        <text x="650" y="480" text-anchor="middle" font-size="16" font-weight="bold" fill="#6A1B9A">Error Handling</text>
+                        <text x="650" y="505" text-anchor="middle" font-size="12" fill="#666">1. Try-Catch Blocks</text>
+                        <text x="650" y="525" text-anchor="middle" font-size="12" fill="#666">2. Error Middleware</text>
+                        <text x="650" y="545" text-anchor="middle" font-size="12" fill="#666">3. Logging (Winston)</text>
+                        
+                        <rect x="800" y="450" width="200" height="100" fill="#E3F2FD" stroke="#2196F3" stroke-width="2" rx="10"/>
+                        <text x="900" y="480" text-anchor="middle" font-size="16" font-weight="bold" fill="#1976D2">Security Measures</text>
+                        <text x="900" y="505" text-anchor="middle" font-size="12" fill="#666">1. Rate Limiting</text>
+                        <text x="900" y="525" text-anchor="middle" font-size="12" fill="#666">2. CORS Policy</text>
+                        <text x="900" y="545" text-anchor="middle" font-size="12" fill="#666">3. Helmet Headers</text>
+                    </svg>
+                    <div class="info-box">
+                        <h4>Key Data Flow Patterns:</h4>
+                        <p>
+                            <strong>Request Flow:</strong> UI → API Gateway → Middleware (Auth, Validation) → Business Logic → Data Layer → Database<br>
+                            <strong>Response Flow:</strong> Database → Data Layer → Business Logic → API Gateway → UI<br>
+                            <strong>Real-time Flow:</strong> Event → Notification Service → WebSocket → Connected Clients<br>
+                            <strong>Security:</strong> JWT tokens in headers, role-based middleware, rate limiting, CORS, Helmet
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align: center; padding: 40px; background: #f5f5f5; border-radius: 10px; margin-top: 40px;">
+                <h3 style="color: #667eea; margin-bottom: 10px;">🎓 Campus Pass System</h3>
+                <p style="color: #666; margin-bottom: 5px;">Complete Architecture & Workflow Diagrams</p>
+                <p style="color: #999; font-size: 14px;">Generated for Demo & Interview Purposes</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

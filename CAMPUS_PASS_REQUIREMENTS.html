@@ -1,0 +1,1977 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Pass - Complete Requirements & Specifications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        nav {
+            background: #2d3748;
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 50px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 80px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.7em;
+            margin: 30px 0 20px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        .problem-statement {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 6px solid #f59e0b;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-size: 1.1em;
+        }
+
+        .solution-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 6px solid #10b981;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-size: 1.1em;
+        }
+
+        .role-card {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .role-card h4 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-icon {
+            font-size: 1.8em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .feature-card {
+            background: #f7fafc;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .feature-card p {
+            color: #4a5568;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .priority-high {
+            border-left-color: #ef4444;
+        }
+
+        .priority-medium {
+            border-left-color: #f59e0b;
+        }
+
+        .priority-low {
+            border-left-color: #10b981;
+        }
+
+        .endpoint-section {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .endpoint {
+            background: #1a202c;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-right: 10px;
+        }
+
+        .method-get { background: #48bb78; color: white; }
+        .method-post { background: #4299e1; color: white; }
+        .method-put { background: #ed8936; color: white; }
+        .method-patch { background: #9f7aea; color: white; }
+        .method-delete { background: #f56565; color: white; }
+
+        .checklist {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f7fafc;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 3px;
+        }
+
+        .status-required { background: #fee2e2; color: #991b1b; }
+        .status-optional { background: #dbeafe; color: #1e40af; }
+        .status-future { background: #e0e7ff; color: #4338ca; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 5px solid #4299e1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border-left: 5px solid #ed8936;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-left: 5px solid #48bb78;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .workflow-diagram {
+            background: #f7fafc;
+            border: 3px solid #667eea;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .workflow-step {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .workflow-step strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .api-endpoint {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .endpoint-header {
+            background: #2d3748;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .endpoint-body {
+            padding: 15px 20px;
+            line-height: 1.8;
+        }
+
+        .endpoint-body strong {
+            color: #667eea;
+            display: inline-block;
+            min-width: 100px;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .method.get {
+            background: #48bb78;
+            color: white;
+        }
+
+        .method.post {
+            background: #4299e1;
+            color: white;
+        }
+
+        .method.put {
+            background: #ed8936;
+            color: white;
+        }
+
+        .method.delete {
+            background: #f56565;
+            color: white;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 1.05em;
+            color: #e2e8f0;
+        }
+
+        .priority-critical {
+            border-left: 4px solid #ef4444;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Campus Pass Management System</h1>
+            <p>Complete Requirements, Features & Implementation Specifications</p>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.85;">Digital Outpass Management for Educational Institutions</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#problem">Problem Statement</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#roles">Roles & Permissions</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#workflows">Workflows</a></li>
+                <li><a href="#endpoints">API Endpoints</a></li>
+                <li><a href="#frontend-req">Frontend Requirements</a></li>
+                <li><a href="#backend-req">Backend Requirements</a></li>
+                <li><a href="#checklist">Implementation Checklist</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <!-- SECTION 1: OVERVIEW -->
+            <section id="overview">
+                <h2>📋 Project Overview</h2>
+                
+                <div class="info-box">
+                    <h3 style="margin-top: 0;">What is Campus Pass?</h3>
+                    <p><strong>Campus Pass</strong> is a comprehensive digital outpass management system designed for educational institutions (colleges, universities, hostels) to streamline the process of students requesting, wardens approving, and security personnel verifying outpasses for leaving campus premises.</p>
+                </div>
+
+                <h3>Key Objectives</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🎯 Digitize Manual Process</h4>
+                        <p>Replace paper-based outpass system with a digital, trackable solution</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚡ Real-time Updates</h4>
+                        <p>Instant notifications for all stakeholders using WebSocket technology</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔒 Secure & Verifiable</h4>
+                        <p>QR code-based verification to prevent fraud and ensure authenticity</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 Analytics & Tracking</h4>
+                        <p>Complete audit trail and analytics for administrators</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📱 Mobile-First Design</h4>
+                        <p>Responsive interface accessible from any device</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔐 Role-Based Access</h4>
+                        <p>Different interfaces and permissions for each user type</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: PROBLEM STATEMENT -->
+            <section id="problem">
+                <h2>❗ Problem Statement</h2>
+                
+                <div class="problem-statement">
+                    <h3 style="margin-top: 0; color: #92400e;">Current Challenges in Traditional Outpass Systems</h3>
+                    
+                    <h4>1. Manual Paper-Based Process</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Students fill physical forms</li>
+                        <li>Forms get lost or damaged</li>
+                        <li>No digital record or backup</li>
+                        <li>Difficult to track and audit</li>
+                    </ul>
+
+                    <h4>2. Delayed Approvals</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Students wait hours/days for warden approval</li>
+                        <li>No notification system</li>
+                        <li>Wardens may miss urgent requests</li>
+                        <li>No priority handling for emergencies</li>
+                    </ul>
+
+                    <h4>3. Security Concerns</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Easy to forge paper outpasses</li>
+                        <li>No way to verify authenticity at gate</li>
+                        <li>Students may leave without proper authorization</li>
+                        <li>Difficult to track who is currently outside campus</li>
+                    </ul>
+
+                    <h4>4. Lack of Accountability</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>No record of check-in/check-out times</li>
+                        <li>Cannot track overdue students</li>
+                        <li>No emergency contact information readily available</li>
+                        <li>Parents/guardians not informed</li>
+                    </ul>
+
+                    <h4>5. Administrative Burden</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Manual record-keeping is time-consuming</li>
+                        <li>Difficult to generate reports</li>
+                        <li>No analytics on outpass patterns</li>
+                        <li>Hard to identify frequent violators</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 3: SOLUTION -->
+            <section id="solution">
+                <h2>✅ Our Solution</h2>
+                
+                <div class="solution-box">
+                    <h3 style="margin-top: 0; color: #065f46;">Campus Pass Digital Platform</h3>
+                    
+                    <p style="font-size: 1.1em; margin-bottom: 20px;">A comprehensive web-based application that digitizes the entire outpass lifecycle from request to return, with role-based access for students, wardens, and security personnel.</p>
+
+                    <h4>Core Features</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px; font-size: 1.05em;">
+                        <li><strong>Digital Request System:</strong> Students submit outpass requests online with all required details</li>
+                        <li><strong>Instant Notifications:</strong> Real-time alerts via WebSocket for all status changes</li>
+                        <li><strong>QR Code Verification:</strong> Unique QR codes for each approved outpass</li>
+                        <li><strong>Mobile QR Scanner:</strong> Security can scan QR codes using phone camera</li>
+                        <li><strong>Automated Emails:</strong> Email notifications with PDF attachments</li>
+                        <li><strong>Dashboard Analytics:</strong> Real-time statistics and insights</li>
+                        <li><strong>Audit Trail:</strong> Complete history of all actions</li>
+                        <li><strong>Overdue Tracking:</strong> Automatic detection of students who haven't returned</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 4: ROLES & PERMISSIONS -->
+            <section id="roles">
+                <h2>👥 Roles & Permissions</h2>
+
+                <div class="role-card">
+                    <h4><span class="role-icon">👨‍🎓</span> Student (Role: 0)</h4>
+                    <p><strong>Primary Users:</strong> College/University students living in hostels</p>
+                    
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Permissions:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>✅ Create new outpass requests</li>
+                        <li>✅ View own outpass history</li>
+                        <li>✅ View outpass details (status, QR code, dates)</li>
+                        <li>✅ Cancel pending outpass requests</li>
+                        <li>✅ Update profile information</li>
+                        <li>✅ Download approved outpass PDF</li>
+                        <li>✅ Receive real-time notifications</li>
+                        <li>❌ Cannot approve/reject outpasses</li>
+                        <li>❌ Cannot view other students' outpasses</li>
+                        <li>❌ Cannot perform check-in/check-out</li>
+                    </ul>
+
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Use Cases:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Going home for weekend/holidays</li>
+                        <li>Medical emergencies</li>
+                        <li>Family functions/events</li>
+                        <li>Job interviews</li>
+                        <li>Personal errands in city</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="role-icon">👨‍🏫</span> Warden (Role: 2)</h4>
+                    <p><strong>Primary Users:</strong> Hostel wardens, hostel superintendents</p>
+                    
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Permissions:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>✅ View all outpass requests for their hostel</li>
+                        <li>✅ Approve outpass requests (generates QR code)</li>
+                        <li>✅ Reject outpass requests with reason</li>
+                        <li>✅ View student details and history</li>
+                        <li>✅ View analytics and reports</li>
+                        <li>✅ Receive notifications for new requests</li>
+                        <li>✅ Filter outpasses by status, date, student</li>
+                        <li>✅ View overdue students list</li>
+                        <li>✅ Update own profile</li>
+                        <li>❌ Cannot create outpass requests</li>
+                        <li>❌ Cannot perform check-in/check-out</li>
+                        <li>❌ Cannot view outpasses from other hostels</li>
+                    </ul>
+
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Responsibilities:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Review outpass requests promptly</li>
+                        <li>Verify student information and reason</li>
+                        <li>Approve/reject based on hostel rules</li>
+                        <li>Monitor overdue students</li>
+                        <li>Maintain discipline and safety</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="role-icon">👮</span> Security Officer (Role: 3)</h4>
+                    <p><strong>Primary Users:</strong> Campus security guards, gate security personnel</p>
+                    
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Permissions:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>✅ Scan QR codes using mobile camera</li>
+                        <li>✅ Verify outpass authenticity</li>
+                        <li>✅ Perform check-out (student leaving campus)</li>
+                        <li>✅ Perform check-in (student returning to campus)</li>
+                        <li>✅ View currently checked-out students</li>
+                        <li>✅ View check-in/check-out history</li>
+                        <li>✅ View overdue students</li>
+                        <li>✅ Update own profile</li>
+                        <li>❌ Cannot create outpass requests</li>
+                        <li>❌ Cannot approve/reject outpasses</li>
+                        <li>❌ Cannot modify outpass details</li>
+                    </ul>
+
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Responsibilities:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>Verify QR code before allowing exit</li>
+                        <li>Record accurate check-out time</li>
+                        <li>Verify student identity matches outpass</li>
+                        <li>Record check-in time when student returns</li>
+                        <li>Report suspicious activities</li>
+                        <li>Ensure only authorized students leave campus</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="role-icon">👨‍💼</span> Admin (Role: 1)</h4>
+                    <p><strong>Primary Users:</strong> System administrators, college management</p>
+                    
+                    <h4 style="font-size: 1.1em; margin-top: 20px;">Permissions:</h4>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>✅ Full system access</li>
+                        <li>✅ Create/manage users (students, wardens, security)</li>
+                        <li>✅ View all outpasses across all hostels</li>
+                        <li>✅ Generate system-wide reports</li>
+                        <li>✅ Configure system settings</li>
+                        <li>✅ View audit logs</li>
+                        <li>✅ Manage hostel information</li>
+                        <li>✅ Override outpass decisions (if needed)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 5: FEATURES -->
+            <section id="features">
+                <h2>🎯 Complete Feature List</h2>
+
+                <h3>Core Features <span class="status-badge status-required">REQUIRED</span></h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card priority-high">
+                        <h4>F1: User Authentication</h4>
+                        <p><strong>Description:</strong> Secure login/logout with JWT tokens</p>
+                        <p><strong>Includes:</strong> Email/password login, token refresh, session management</p>
+                        <p><strong>Roles:</strong> All users</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F2: Student Registration</h4>
+                        <p><strong>Description:</strong> New students can register with required details</p>
+                        <p><strong>Includes:</strong> Form validation, email verification, profile setup</p>
+                        <p><strong>Roles:</strong> Students</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F3: Create Outpass Request</h4>
+                        <p><strong>Description:</strong> Students submit outpass requests</p>
+                        <p><strong>Includes:</strong> Reason, destination, dates, emergency contact, purpose</p>
+                        <p><strong>Roles:</strong> Students</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F4: View Outpass History</h4>
+                        <p><strong>Description:</strong> Students view all their outpasses</p>
+                        <p><strong>Includes:</strong> Filter by status, pagination, search</p>
+                        <p><strong>Roles:</strong> Students</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F5: Warden Approval/Rejection</h4>
+                        <p><strong>Description:</strong> Wardens review and approve/reject requests</p>
+                        <p><strong>Includes:</strong> View details, add remarks, approve/reject with reason</p>
+                        <p><strong>Roles:</strong> Wardens</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F6: QR Code Generation</h4>
+                        <p><strong>Description:</strong> Generate unique QR code on approval</p>
+                        <p><strong>Includes:</strong> Embedded outpass data, expiry validation</p>
+                        <p><strong>Roles:</strong> System (automatic)</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F7: QR Code Scanning</h4>
+                        <p><strong>Description:</strong> Security scans QR using mobile camera</p>
+                        <p><strong>Includes:</strong> Camera access, QR decode, verification</p>
+                        <p><strong>Roles:</strong> Security</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F8: Check-Out Process</h4>
+                        <p><strong>Description:</strong> Security checks out student leaving campus</p>
+                        <p><strong>Includes:</strong> Verify QR, record time, update status</p>
+                        <p><strong>Roles:</strong> Security</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F9: Check-In Process</h4>
+                        <p><strong>Description:</strong> Security checks in student returning to campus</p>
+                        <p><strong>Includes:</strong> Verify identity, record time, update status</p>
+                        <p><strong>Roles:</strong> Security</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F10: Real-time Notifications</h4>
+                        <p><strong>Description:</strong> WebSocket-based instant notifications</p>
+                        <p><strong>Includes:</strong> Request created, approved, rejected, checked-out, checked-in</p>
+                        <p><strong>Roles:</strong> All users</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F11: Email Notifications</h4>
+                        <p><strong>Description:</strong> Email alerts for important events</p>
+                        <p><strong>Includes:</strong> Approval email with PDF, rejection email, overdue alerts</p>
+                        <p><strong>Roles:</strong> Students, Wardens</p>
+                    </div>
+
+                    <div class="feature-card priority-high">
+                        <h4>F12: PDF Generation</h4>
+                        <p><strong>Description:</strong> Generate PDF outpass with QR code</p>
+                        <p><strong>Includes:</strong> Student details, dates, QR code, warden signature</p>
+                        <p><strong>Roles:</strong> System (automatic)</p>
+                    </div>
+                </div>
+
+                <h3>Dashboard Features <span class="status-badge status-required">REQUIRED</span></h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card priority-medium">
+                        <h4>F13: Student Dashboard</h4>
+                        <p><strong>Description:</strong> Overview of student's outpass status</p>
+                        <p><strong>Includes:</strong> Total outpasses, pending, approved, rejected, quick actions</p>
+                    </div>
+
+                    <div class="feature-card priority-medium">
+                        <h4>F14: Warden Dashboard</h4>
+                        <p><strong>Description:</strong> Overview of hostel outpass statistics</p>
+                        <p><strong>Includes:</strong> Pending requests, approved today, students out, overdue</p>
+                    </div>
+
+                    <div class="feature-card priority-medium">
+                        <h4>F15: Security Dashboard</h4>
+                        <p><strong>Description:</strong> Overview of gate activity</p>
+                        <p><strong>Includes:</strong> Active passes, checked out today, checked in today, overdue</p>
+                    </div>
+                </div>
+
+                <h3>Additional Features <span class="status-badge status-optional">OPTIONAL</span></h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card priority-medium">
+                        <h4>F16: Cancel Outpass</h4>
+                        <p><strong>Description:</strong> Students can cancel pending/approved outpasses</p>
+                        <p><strong>Includes:</strong> Cancellation reason, notification to warden</p>
+                    </div>
+
+                    <div class="feature-card priority-medium">
+                        <h4>F17: Update Outpass</h4>
+                        <p><strong>Description:</strong> Students can edit pending outpasses</p>
+                        <p><strong>Includes:</strong> Modify dates, reason, destination (before approval)</p>
+                    </div>
+
+                    <div class="feature-card priority-medium">
+                        <h4>F18: Overdue Tracking</h4>
+                        <p><strong>Description:</strong> Automatic detection of overdue students</p>
+                        <p><strong>Includes:</strong> Alert wardens, notify parents, mark as overdue</p>
+                    </div>
+
+                    <div class="feature-card priority-medium">
+                        <h4>F19: Profile Management</h4>
+                        <p><strong>Description:</strong> Users can update their profiles</p>
+                        <p><strong>Includes:</strong> Phone, emergency contact, photo, password change</p>
+                    </div>
+
+                    <div class="feature-card priority-low">
+                        <h4>F20: Analytics & Reports</h4>
+                        <p><strong>Description:</strong> Generate reports and analytics</p>
+                        <p><strong>Includes:</strong> Monthly reports, department-wise, hostel-wise, export CSV</p>
+                    </div>
+
+                    <div class="feature-card priority-low">
+                        <h4>F21: Parent Notifications</h4>
+                        <p><strong>Description:</strong> Notify parents when student leaves/returns</p>
+                        <p><strong>Includes:</strong> SMS/Email to parent contact</p>
+                    </div>
+                </div>
+
+                <h3>Future Enhancements <span class="status-badge status-future">FUTURE</span></h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card priority-low">
+                        <h4>F22: Mobile App</h4>
+                        <p><strong>Description:</strong> Native mobile apps for iOS/Android</p>
+                        <p><strong>Includes:</strong> Push notifications, offline mode</p>
+                    </div>
+
+                    <div class="feature-card priority-low">
+                        <h4>F23: Biometric Verification</h4>
+                        <p><strong>Description:</strong> Fingerprint/face recognition at gate</p>
+                        <p><strong>Includes:</strong> Hardware integration, biometric matching</p>
+                    </div>
+
+                    <div class="feature-card priority-low">
+                        <h4>F24: GPS Tracking</h4>
+                        <p><strong>Description:</strong> Track student location (with consent)</p>
+                        <p><strong>Includes:</strong> Real-time location, geofencing</p>
+                    </div>
+
+                    <div class="feature-card priority-low">
+                        <h4>F25: Multi-language Support</h4>
+                        <p><strong>Description:</strong> Support for regional languages</p>
+                        <p><strong>Includes:</strong> Hindi, Tamil, Telugu, etc.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: WORKFLOWS -->
+            <section id="workflows">
+                <h2>🔄 Complete User Workflows</h2>
+
+                <h3>Workflow 1: Student Creates Outpass</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>Step 1:</strong> Student logs in → Redirected to dashboard
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 2:</strong> Clicks "Create Outpass" → Navigate to form
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 3:</strong> Fills form:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Reason for leaving (dropdown: Home, Medical, Personal, etc.)</li>
+                            <li>Destination address</li>
+                            <li>From date & time</li>
+                            <li>To date & time (expected return)</li>
+                            <li>Contact number during leave</li>
+                            <li>Emergency contact (parent/guardian)</li>
+                            <li>Purpose/additional details</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 4:</strong> Form validation (Zod schema)
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>All required fields filled</li>
+                            <li>Valid dates (from < to, future dates)</li>
+                            <li>Valid phone numbers</li>
+                            <li>No overlapping outpasses</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 5:</strong> Submit → API call POST /api/student/outpasses
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 6:</strong> Backend creates outpass with status "PENDING"
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 7:</strong> Backend sends notification to warden (Socket.io)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 8:</strong> Backend sends confirmation email to student
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 9:</strong> Student sees success message → Redirected to history
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 10:</strong> Student receives real-time notification "Request submitted"
+                    </div>
+                </div>
+
+                <h3>Workflow 2: Warden Approves Outpass</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>Step 1:</strong> Warden receives notification (Socket.io + Email)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 2:</strong> Warden logs in → Dashboard shows pending count
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 3:</strong> Clicks "Pending Requests" → List of pending outpasses
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 4:</strong> Clicks on outpass → View full details:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Student name, roll number, department, year</li>
+                            <li>Hostel, room number</li>
+                            <li>Reason, destination, dates</li>
+                            <li>Contact numbers</li>
+                            <li>Student's outpass history</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 5:</strong> Warden reviews and decides:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li><strong>Option A:</strong> Approve → Add remarks (optional) → Click "Approve"</li>
+                            <li><strong>Option B:</strong> Reject → Add reason (required) → Click "Reject"</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 6 (If Approved):</strong> API call PATCH /api/warden/outpass/:id/approve
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 7:</strong> Backend generates unique QR code with outpass data
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 8:</strong> Backend generates PDF with QR code
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 9:</strong> Backend sends email to student with PDF attachment
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 10:</strong> Backend sends real-time notification to student (Socket.io)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 11:</strong> Outpass status updated to "APPROVED"
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 12:</strong> Student can now download PDF and show QR at gate
+                    </div>
+                </div>
+
+                <h3>Workflow 3: Security Checks Out Student</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>Step 1:</strong> Student arrives at gate with approved outpass (QR code)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 2:</strong> Security officer opens /security/scan-qr
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 3:</strong> Camera activates (html5-qrcode library)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 4:</strong> Student shows QR code (from phone or printed PDF)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 5:</strong> QR code scanned → Data decoded
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 6:</strong> Frontend extracts outpass ID from QR data
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 7:</strong> API call POST /api/security/check-out
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Body: { outpassId, guardName, remarks }</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 8:</strong> Backend verifies:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Outpass exists and is approved</li>
+                            <li>Not already checked out</li>
+                            <li>Current date is within outpass dates</li>
+                            <li>QR code is valid (not expired)</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 9:</strong> Backend updates outpass:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Status → "CHECKED_OUT"</li>
+                            <li>checkOutTime → current timestamp</li>
+                            <li>checkOutBy → security officer ID</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 10:</strong> Backend sends notification to student (Socket.io)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 11:</strong> Success message shown to security officer
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 12:</strong> Student can now leave campus
+                    </div>
+                </div>
+
+                <h3>Workflow 4: Security Checks In Student</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>Step 1:</strong> Student returns to campus
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 2:</strong> Security officer opens /security/scan-qr
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 3:</strong> Student shows QR code or provides outpass number
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 4:</strong> Security scans QR or searches by outpass number
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 5:</strong> API call POST /api/security/check-in
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Body: { outpassId, guardName, remarks }</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 6:</strong> Backend verifies:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Outpass is checked out</li>
+                            <li>Not already checked in</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 7:</strong> Backend checks if overdue:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>If current time > expected return time → Mark as overdue</li>
+                            <li>Calculate delay duration</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 8:</strong> Backend updates outpass:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Status → "CHECKED_IN" or "OVERDUE"</li>
+                            <li>checkInTime → current timestamp</li>
+                            <li>checkInBy → security officer ID</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 9:</strong> Backend sends notification to student (Socket.io)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 10:</strong> If overdue, notify warden
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 11:</strong> Success message shown to security officer
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 12:</strong> Student is back in hostel
+                    </div>
+                </div>
+
+                <h3>Workflow 5: Warden Rejects Outpass</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>Step 1:</strong> Warden reviews pending outpass request
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 2:</strong> Warden finds issue (invalid reason, dates, etc.)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 3:</strong> Warden clicks "Reject" button
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 4:</strong> Modal opens asking for rejection reason
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 5:</strong> Warden enters reason and confirms
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 6:</strong> API call PUT /api/warden/outpass/:id/reject
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Body: { reason: "Rejection reason text" }</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 7:</strong> Backend updates outpass:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Status → "REJECTED"</li>
+                            <li>rejectionReason → provided reason</li>
+                            <li>rejectedBy → warden ID</li>
+                            <li>rejectedAt → current timestamp</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 8:</strong> Backend sends notification to student (Socket.io + Email)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 9:</strong> Student receives rejection notification with reason
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 10:</strong> Student can create new outpass with corrections
+                    </div>
+                </div>
+
+                <h3>Workflow 6: Student Cancels Outpass</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>Step 1:</strong> Student has pending/approved outpass
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 2:</strong> Plans change, student needs to cancel
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 3:</strong> Student opens outpass details page
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 4:</strong> Student clicks "Cancel Outpass" button
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 5:</strong> Confirmation dialog appears
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 6:</strong> Student confirms cancellation
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 7:</strong> API call PUT /api/student/outpass/:id/cancel
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 8:</strong> Backend verifies:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Outpass belongs to student</li>
+                            <li>Status is PENDING or APPROVED (not checked out)</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 9:</strong> Backend updates outpass:
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>Status → "CANCELLED"</li>
+                            <li>cancelledAt → current timestamp</li>
+                        </ul>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 10:</strong> If was approved, notify warden (Socket.io)
+                    </div>
+                    <div class="workflow-step">
+                        <strong>Step 11:</strong> Success message shown to student
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Endpoints Section -->
+            <div class="section">
+                <h2>📡 API Endpoints</h2>
+                <p>Complete list of expected API endpoints organized by role and functionality.</p>
+
+                <h3>Authentication Endpoints</h3>
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/auth/register</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Register new user (Student, Warden, Security, Admin)<br>
+                        <strong>Body:</strong> { name, email, password, role, rollNumber?, department?, hostel? }<br>
+                        <strong>Response:</strong> { user, token }<br>
+                        <strong>Access:</strong> Public
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/auth/login</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Login user<br>
+                        <strong>Body:</strong> { email, password }<br>
+                        <strong>Response:</strong> { user, token }<br>
+                        <strong>Access:</strong> Public
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/auth/me</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get current user profile<br>
+                        <strong>Response:</strong> { user }<br>
+                        <strong>Access:</strong> Authenticated users
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/auth/logout</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Logout user<br>
+                        <strong>Response:</strong> { message: "Logged out successfully" }<br>
+                        <strong>Access:</strong> Authenticated users
+                    </div>
+                </div>
+
+                <h3>Student Endpoints</h3>
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/student/outpass</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Create new outpass request<br>
+                        <strong>Body:</strong> { reason, destination, fromDate, toDate, contactNumber, parentContact }<br>
+                        <strong>Response:</strong> { outpass }<br>
+                        <strong>Access:</strong> Student only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/student/outpass</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all outpasses for logged-in student<br>
+                        <strong>Query:</strong> ?status=PENDING&limit=10&page=1<br>
+                        <strong>Response:</strong> { outpasses: [], total, page, pages }<br>
+                        <strong>Access:</strong> Student only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/student/outpass/:id</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get specific outpass details<br>
+                        <strong>Response:</strong> { outpass }<br>
+                        <strong>Access:</strong> Student only (own outpass)
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/student/outpass/:id/cancel</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Cancel pending/approved outpass<br>
+                        <strong>Response:</strong> { outpass }<br>
+                        <strong>Access:</strong> Student only (own outpass)
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/student/dashboard</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get dashboard statistics<br>
+                        <strong>Response:</strong> { totalOutpasses, pending, approved, rejected, active }<br>
+                        <strong>Access:</strong> Student only
+                    </div>
+                </div>
+
+                <h3>Warden Endpoints</h3>
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/warden/outpass/pending</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all pending outpass requests<br>
+                        <strong>Query:</strong> ?hostel=A&department=CS&limit=20&page=1<br>
+                        <strong>Response:</strong> { outpasses: [], total, page, pages }<br>
+                        <strong>Access:</strong> Warden only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/warden/outpass</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all outpasses (all statuses)<br>
+                        <strong>Query:</strong> ?status=APPROVED&fromDate=2024-01-01&toDate=2024-12-31<br>
+                        <strong>Response:</strong> { outpasses: [], total, page, pages }<br>
+                        <strong>Access:</strong> Warden only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/warden/outpass/:id</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get specific outpass details<br>
+                        <strong>Response:</strong> { outpass (with student details) }<br>
+                        <strong>Access:</strong> Warden only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/warden/outpass/:id/approve</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Approve outpass request<br>
+                        <strong>Body:</strong> { remarks?: "Optional approval notes" }<br>
+                        <strong>Response:</strong> { outpass }<br>
+                        <strong>Access:</strong> Warden only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/warden/outpass/:id/reject</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Reject outpass request<br>
+                        <strong>Body:</strong> { reason: "Rejection reason" }<br>
+                        <strong>Response:</strong> { outpass }<br>
+                        <strong>Access:</strong> Warden only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/warden/dashboard</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get warden dashboard statistics<br>
+                        <strong>Response:</strong> { totalRequests, pending, approved, rejected, activeOutpasses }<br>
+                        <strong>Access:</strong> Warden only
+                    </div>
+                </div>
+
+                <h3>Security Endpoints</h3>
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/security/check-out</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Check out student (scan QR at exit)<br>
+                        <strong>Body:</strong> { outpassId, guardName, remarks? }<br>
+                        <strong>Response:</strong> { outpass, message }<br>
+                        <strong>Access:</strong> Security only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/security/check-in</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Check in student (scan QR at entry)<br>
+                        <strong>Body:</strong> { outpassId, guardName, remarks? }<br>
+                        <strong>Response:</strong> { outpass, message, isOverdue }<br>
+                        <strong>Access:</strong> Security only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/security/verify/:outpassId</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Verify outpass before scanning<br>
+                        <strong>Response:</strong> { valid: true/false, outpass, student }<br>
+                        <strong>Access:</strong> Security only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/security/active</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all currently active outpasses (checked out)<br>
+                        <strong>Response:</strong> { outpasses: [] }<br>
+                        <strong>Access:</strong> Security only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/security/history</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get check-in/check-out history<br>
+                        <strong>Query:</strong> ?date=2024-01-15&limit=50<br>
+                        <strong>Response:</strong> { history: [], total }<br>
+                        <strong>Access:</strong> Security only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/security/dashboard</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get security dashboard statistics<br>
+                        <strong>Response:</strong> { activeOutpasses, todayCheckOuts, todayCheckIns, overdueCount }<br>
+                        <strong>Access:</strong> Security only
+                    </div>
+                </div>
+
+                <h3>Notification Endpoints</h3>
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/notifications</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all notifications for logged-in user<br>
+                        <strong>Query:</strong> ?unread=true&limit=20<br>
+                        <strong>Response:</strong> { notifications: [], unreadCount }<br>
+                        <strong>Access:</strong> All authenticated users
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/notifications/:id/read</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Mark notification as read<br>
+                        <strong>Response:</strong> { notification }<br>
+                        <strong>Access:</strong> All authenticated users
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/notifications/read-all</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Mark all notifications as read<br>
+                        <strong>Response:</strong> { message, count }<br>
+                        <strong>Access:</strong> All authenticated users
+                    </div>
+                </div>
+
+                <h3>Admin Endpoints</h3>
+                
+                <!-- Dashboard & Statistics -->
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/stats</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get dashboard statistics<br>
+                        <strong>Response:</strong> { totalUsers, totalStudents, totalWardens, totalSecurity, totalOutpasses, pendingOutpasses, approvedOutpasses, activeOutpasses, totalHostels }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <!-- User Management -->
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/users</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all users with filters<br>
+                        <strong>Query:</strong> ?role=0&isActive=true&search=john<br>
+                        <strong>Response:</strong> { users: [] }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/users</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Create new user<br>
+                        <strong>Body:</strong> { name, email, password, role, phone, ... }<br>
+                        <strong>Response:</strong> { user }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/admin/users/:id</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Update user<br>
+                        <strong>Body:</strong> { name, phone, isActive, ... }<br>
+                        <strong>Response:</strong> { user }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="path">/api/admin/users/:id</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Delete user<br>
+                        <strong>Response:</strong> { message }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <!-- Hostel Management -->
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/hostels</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get all hostels<br>
+                        <strong>Response:</strong> { hostels: [] }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/hostels</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Create new hostel<br>
+                        <strong>Body:</strong> { name, code, type, capacity, address, contactNumber, facilities }<br>
+                        <strong>Response:</strong> { hostel }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/admin/hostels/:id</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Update hostel<br>
+                        <strong>Body:</strong> { name, capacity, warden, isActive, ... }<br>
+                        <strong>Response:</strong> { hostel }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="path">/api/admin/hostels/:id</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Delete hostel<br>
+                        <strong>Response:</strong> { message }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <!-- System Settings -->
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/settings</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Get system settings<br>
+                        <strong>Response:</strong> { settings }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="path">/api/admin/settings</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Update system settings<br>
+                        <strong>Body:</strong> { maxOutpassDuration, emailNotificationsEnabled, qrCodeExpiryHours, ... }<br>
+                        <strong>Response:</strong> { settings }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/settings/system-status</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Set system ON/OFF (blocks outpass creation when OFF)<br>
+                        <strong>Body:</strong> { isActive: true/false }<br>
+                        <strong>Response:</strong> { isSystemActive }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <!-- Outpass Management -->
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/outpasses</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> View all outpasses system-wide<br>
+                        <strong>Query:</strong> ?status=pending&hostel=hostelId&fromDate=2024-01-01&toDate=2024-01-31<br>
+                        <strong>Response:</strong> { outpasses: [] }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/outpasses/:id/override</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Override warden decision (approve/reject)<br>
+                        <strong>Body:</strong> { action: "approve"/"reject", remarks: "Admin override reason" }<br>
+                        <strong>Response:</strong> { outpass }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+
+                <!-- Reports -->
+                <div class="api-endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/reports</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <strong>Purpose:</strong> Generate system reports<br>
+                        <strong>Query:</strong> ?type=outpass-summary/user-summary/hostel-summary&startDate=2024-01-01&endDate=2024-01-31<br>
+                        <strong>Response:</strong> { report }<br>
+                        <strong>Access:</strong> Admin only
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Checklist Section -->
+            <div class="section">
+                <h2>✅ Implementation Checklist</h2>
+                <p>Step-by-step guide for implementing the complete Campus Pass system.</p>
+
+                <h3>Phase 1: Foundation (Week 1)</h3>
+                <div class="checklist">
+                    <div class="checklist-item priority-critical">
+                        <strong>Backend Setup:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Initialize Node.js project with TypeScript</li>
+                            <li>✅ Setup Fastify server</li>
+                            <li>✅ Configure MongoDB connection</li>
+                            <li>✅ Setup environment variables</li>
+                            <li>✅ Create folder structure (models, routes, controllers, services)</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-critical">
+                        <strong>Database Models:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Create User model with role enum</li>
+                            <li>✅ Create Outpass model with all statuses</li>
+                            <li>✅ Create Notification model</li>
+                            <li>✅ Add indexes for performance</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-critical">
+                        <strong>Authentication System:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Implement password hashing (bcryptjs)</li>
+                            <li>✅ Implement JWT token generation</li>
+                            <li>✅ Create authentication middleware</li>
+                            <li>✅ Create role-based middleware (studentOnly, wardenOnly, securityOnly)</li>
+                            <li>✅ Implement register/login/logout endpoints</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-high">
+                        <strong>Frontend Setup:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Initialize React + Vite project</li>
+                            <li>✅ Setup Tailwind CSS</li>
+                            <li>✅ Configure React Router</li>
+                            <li>✅ Setup Zustand for state management</li>
+                            <li>✅ Create Axios instance with interceptors</li>
+                            <li>✅ Create auth service and store</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Phase 2: Core Features (Week 2-3)</h3>
+                <div class="checklist">
+                    <div class="checklist-item priority-critical">
+                        <strong>Student Features:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Implement create outpass endpoint</li>
+                            <li>❌ Implement get outpasses endpoint with filters</li>
+                            <li>❌ Implement cancel outpass endpoint</li>
+                            <li>❌ Create student dashboard page</li>
+                            <li>❌ Create outpass creation form</li>
+                            <li>❌ Create outpass history page</li>
+                            <li>❌ Create outpass details page</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-critical">
+                        <strong>Warden Features:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Implement get pending outpasses endpoint</li>
+                            <li>❌ Implement approve outpass endpoint</li>
+                            <li>❌ Implement reject outpass endpoint</li>
+                            <li>❌ Create warden dashboard page</li>
+                            <li>❌ Create pending requests page</li>
+                            <li>❌ Create approve/reject modal</li>
+                            <li>❌ Create all outpasses view with filters</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-high">
+                        <strong>QR Code System:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Implement QR code generation service</li>
+                            <li>❌ Generate QR on outpass approval</li>
+                            <li>❌ Display QR code on outpass details page</li>
+                            <li>❌ Make QR code downloadable</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-high">
+                        <strong>PDF Generation:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Implement PDF generation service</li>
+                            <li>❌ Generate PDF with outpass details + QR</li>
+                            <li>❌ Add download PDF button</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Phase 3: Security & Real-time (Week 4)</h3>
+                <div class="checklist">
+                    <div class="checklist-item priority-critical">
+                        <strong>Security Features:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Implement QR scanner component (html5-qrcode)</li>
+                            <li>❌ Implement check-out endpoint</li>
+                            <li>❌ Implement check-in endpoint</li>
+                            <li>❌ Implement verify outpass endpoint</li>
+                            <li>❌ Create security dashboard</li>
+                            <li>❌ Create QR scanner page</li>
+                            <li>❌ Create active outpasses page</li>
+                            <li>❌ Create history page</li>
+                            <li>❌ Implement overdue detection</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-high">
+                        <strong>Socket.io Real-time:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Setup Socket.io server</li>
+                            <li>✅ Implement Socket.io service</li>
+                            <li>❌ Implement authentication for Socket.io</li>
+                            <li>❌ Emit events on outpass status changes</li>
+                            <li>❌ Connect Socket.io on frontend login</li>
+                            <li>❌ Listen for notification events</li>
+                            <li>❌ Update UI on real-time events</li>
+                            <li>❌ Show toast notifications</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-high">
+                        <strong>Notification System:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Implement notification service</li>
+                            <li>❌ Create notification on outpass creation</li>
+                            <li>❌ Create notification on approval/rejection</li>
+                            <li>❌ Create notification on check-out/check-in</li>
+                            <li>❌ Implement get notifications endpoint</li>
+                            <li>❌ Implement mark as read endpoint</li>
+                            <li>✅ Create notifications component</li>
+                            <li>❌ Show unread count badge</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Phase 4: Email & Polish (Week 5)</h3>
+                <div class="checklist">
+                    <div class="checklist-item priority-high">
+                        <strong>Email Integration:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Setup Nodemailer</li>
+                            <li>✅ Implement email service</li>
+                            <li>❌ Send email on outpass approval with PDF</li>
+                            <li>❌ Send email on outpass rejection</li>
+                            <li>❌ Create email templates</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-medium">
+                        <strong>UI/UX Improvements:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Create reusable UI components (Button, Input, Modal, etc.)</li>
+                            <li>❌ Implement loading states</li>
+                            <li>❌ Implement error handling</li>
+                            <li>❌ Add form validation</li>
+                            <li>❌ Make responsive for mobile</li>
+                            <li>❌ Add animations and transitions</li>
+                            <li>❌ Implement dark mode (optional)</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-medium">
+                        <strong>Dashboard Statistics:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Implement student dashboard stats</li>
+                            <li>❌ Implement warden dashboard stats</li>
+                            <li>❌ Implement security dashboard stats</li>
+                            <li>❌ Add charts/graphs (optional)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Phase 5: Testing & Deployment (Week 6)</h3>
+                <div class="checklist">
+                    <div class="checklist-item priority-high">
+                        <strong>Testing:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Write unit tests for services</li>
+                            <li>❌ Write unit tests for controllers</li>
+                            <li>❌ Write integration tests for API routes</li>
+                            <li>❌ Write E2E tests for critical workflows</li>
+                            <li>❌ Test all user roles</li>
+                            <li>❌ Test error scenarios</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-high">
+                        <strong>Security Hardening:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Add rate limiting</li>
+                            <li>❌ Configure CORS properly</li>
+                            <li>❌ Add Helmet.js security headers</li>
+                            <li>❌ Implement input sanitization</li>
+                            <li>❌ Add request validation</li>
+                            <li>❌ Secure environment variables</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-medium">
+                        <strong>Documentation:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>✅ Create API documentation</li>
+                            <li>✅ Create README files</li>
+                            <li>❌ Add code comments</li>
+                            <li>❌ Create user guide</li>
+                            <li>❌ Create deployment guide</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-item priority-medium">
+                        <strong>Deployment:</strong>
+                        <ul style="margin-left: 25px; margin-top: 8px;">
+                            <li>❌ Setup production environment</li>
+                            <li>❌ Configure MongoDB Atlas</li>
+                            <li>❌ Deploy backend (Render/Railway/AWS)</li>
+                            <li>❌ Deploy frontend (Vercel/Netlify)</li>
+                            <li>❌ Setup CI/CD pipeline</li>
+                            <li>❌ Configure domain and SSL</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="section">
+                <h2>📋 Summary</h2>
+                <p>This comprehensive requirements document defines the complete Campus Pass Management System. Use this as your blueprint for development and refactoring.</p>
+
+                <h3>Key Takeaways</h3>
+                <div class="feature-card">
+                    <h4>🎯 Core Purpose</h4>
+                    <p>Replace manual paper-based outpass system with a digital, automated, and trackable solution that improves efficiency, security, and accountability.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>👥 Four Roles</h4>
+                    <p><strong>Student (0):</strong> Create and track outpasses<br>
+                    <strong>Admin (1):</strong> System administration (future)<br>
+                    <strong>Warden (2):</strong> Approve/reject requests<br>
+                    <strong>Security (3):</strong> Check-out/check-in verification</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>🔄 Complete Workflow</h4>
+                    <p>Student creates → Warden approves → QR generated → Email sent → Security scans → Check-out → Check-in → Complete</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>⚡ Real-time Features</h4>
+                    <p>Socket.io for instant notifications, live status updates, and real-time dashboard statistics across all user roles.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>🔐 Security First</h4>
+                    <p>JWT authentication, role-based access control, QR code verification, password hashing, and secure data handling.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>📱 Modern Tech Stack</h4>
+                    <p><strong>Backend:</strong> Node.js, Fastify, TypeScript, MongoDB, Socket.io<br>
+                    <strong>Frontend:</strong> React, Vite, TypeScript, Tailwind CSS, Zustand<br>
+                    <strong>Features:</strong> QR codes, PDF generation, Email notifications</p>
+                </div>
+
+                <h3>Next Steps</h3>
+                <ol style="margin-left: 25px; line-height: 1.8;">
+                    <li>Review this document thoroughly</li>
+                    <li>Compare with existing codebase</li>
+                    <li>Identify missing features</li>
+                    <li>Follow the implementation checklist</li>
+                    <li>Implement features phase by phase</li>
+                    <li>Test each feature thoroughly</li>
+                    <li>Deploy and monitor</li>
+                </ol>
+
+                <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white; text-align: center;">
+                    <h3 style="margin: 0 0 10px 0;">🚀 Ready to Build!</h3>
+                    <p style="margin: 0;">Use this document as your single source of truth for the Campus Pass Management System.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 30px; background: #1a202c; color: #a0aec0; margin-top: 50px;">
+            <p>Campus Pass Management System - Requirements Document</p>
+            <p style="margin-top: 10px; font-size: 14px;">Generated: 2026-02-02 | Version: 1.0</p>
+        </footer>
+    </body>
+</html>

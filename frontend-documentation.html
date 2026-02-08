@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Pass Frontend - Complete Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2d3748;
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+            scroll-margin-top: 80px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tech-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tech-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .tech-card p {
+            color: #4a5568;
+            font-size: 0.95em;
+            margin: 5px 0;
+        }
+
+        .folder-structure {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 30px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .folder-structure strong {
+            color: #fbbf24;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .highlight {
+            background: #fef5e7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .component-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .component-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .route-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .route-public {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .route-protected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .route-student {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .route-warden {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .route-security {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚛️ Campus Pass Frontend</h1>
+            <p>Complete Technical Documentation & Architecture Guide</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#technologies">Technologies</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#folder-structure">Folder Structure</a></li>
+                <li><a href="#routing">Routing</a></li>
+                <li><a href="#state">State Management</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#components">Components</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <!-- SECTION 1: TECHNOLOGIES -->
+            <section id="technologies">
+                <h2>🛠️ Technologies Used</h2>
+                
+                <h3>Core Technologies</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>React 19</h4>
+                        <p><strong>Purpose:</strong> UI library</p>
+                        <p><strong>Why:</strong> Component-based architecture, virtual DOM, hooks for state management</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>TypeScript</h4>
+                        <p><strong>Purpose:</strong> Type-safe JavaScript</p>
+                        <p><strong>Why:</strong> Static typing, better IDE support, catches errors at compile-time</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Vite</h4>
+                        <p><strong>Purpose:</strong> Build tool & dev server</p>
+                        <p><strong>Why:</strong> Lightning-fast HMR, optimized builds, modern ES modules</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>React Router v7</h4>
+                        <p><strong>Purpose:</strong> Client-side routing</p>
+                        <p><strong>Why:</strong> Declarative routing, nested routes, protected routes</p>
+                    </div>
+                </div>
+
+                <h3>State Management & Data Fetching</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Zustand</h4>
+                        <p><strong>Purpose:</strong> Global state management</p>
+                        <p><strong>Why:</strong> Simple API, no boilerplate, React hooks integration</p>
+                        <p><strong>Used for:</strong> Auth state, notifications</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Axios</h4>
+                        <p><strong>Purpose:</strong> HTTP client</p>
+                        <p><strong>Why:</strong> Interceptors for auth tokens, request/response transformation</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Socket.io Client</h4>
+                        <p><strong>Purpose:</strong> Real-time communication</p>
+                        <p><strong>Why:</strong> WebSocket connection for live notifications and updates</p>
+                    </div>
+                </div>
+
+                <h3>UI & Styling</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Tailwind CSS</h4>
+                        <p><strong>Purpose:</strong> Utility-first CSS framework</p>
+                        <p><strong>Why:</strong> Rapid UI development, consistent design system, responsive utilities</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Lucide React</h4>
+                        <p><strong>Purpose:</strong> Icon library</p>
+                        <p><strong>Why:</strong> Beautiful, consistent icons as React components</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>React Hot Toast</h4>
+                        <p><strong>Purpose:</strong> Toast notifications</p>
+                        <p><strong>Why:</strong> Lightweight, customizable, accessible notifications</p>
+                    </div>
+                </div>
+
+                <h3>Form Handling & Validation</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>React Hook Form</h4>
+                        <p><strong>Purpose:</strong> Form state management</p>
+                        <p><strong>Why:</strong> Performant, minimal re-renders, easy validation integration</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Zod</h4>
+                        <p><strong>Purpose:</strong> Schema validation</p>
+                        <p><strong>Why:</strong> TypeScript-first, runtime validation, type inference</p>
+                    </div>
+                </div>
+
+                <h3>QR Code Features</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>qrcode.react</h4>
+                        <p><strong>Purpose:</strong> QR code generation</p>
+                        <p><strong>Why:</strong> Display QR codes for approved outpasses</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>html5-qrcode</h4>
+                        <p><strong>Purpose:</strong> QR code scanning</p>
+                        <p><strong>Why:</strong> Camera-based QR scanning for security check-in/out</p>
+                    </div>
+                </div>
+
+                <h3>Utilities</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>date-fns</h4>
+                        <p><strong>Purpose:</strong> Date manipulation</p>
+                        <p><strong>Why:</strong> Lightweight, modular, immutable date utilities</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: ARCHITECTURE -->
+            <section id="architecture">
+                <h2>🏗️ Frontend Architecture</h2>
+                
+                <div class="info-box">
+                    <strong>Architecture Pattern:</strong> Component-Based Architecture with Service Layer
+                    <br><strong>Design Philosophy:</strong> Separation of Concerns, Reusability, Type Safety
+                </div>
+
+                <h3>Architecture Layers</h3>
+                
+                <div class="code-block">
+User Interaction
+    ↓
+React Components (Pages/Layouts)
+    ↓
+React Router (Navigation)
+    ↓
+Services Layer (API calls)
+    ↓
+Axios Interceptors (Auth tokens)
+    ↓
+Backend API
+    ↓
+State Management (Zustand stores)
+    ↓
+Component Re-render
+    ↓
+Socket.io (Real-time updates)
+    ↓
+UI Updates
+                </div>
+
+                <h3>Data Flow</h3>
+                <div class="component-card">
+                    <h4>1. User Action → Service Call</h4>
+                    <p>User clicks button → Component calls service function → Service makes API request</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>2. API Response → State Update</h4>
+                    <p>API returns data → Service processes response → Zustand store updated → Components re-render</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>3. Real-time Updates</h4>
+                    <p>Socket.io receives event → Notification store updated → Toast notification shown → UI refreshed</p>
+                </div>
+            </section>
+
+            <!-- SECTION 3: FOLDER STRUCTURE -->
+            <section id="folder-structure">
+                <h2>📁 Folder Structure Explained</h2>
+                
+                <div class="folder-structure">
+                    <pre>
+frontend/
+│
+├── src/                          # Source code directory
+│   │
+│   ├── <strong>main.tsx</strong>                    # 🚀 Application entry point
+│   │   • React root rendering
+│   │   • Router setup
+│   │   • Global styles import
+│   │
+│   ├── <strong>App.tsx</strong>                     # Main App component
+│   │   • Router configuration
+│   │   • Layout wrapper
+│   │
+│   ├── <strong>pages/</strong>                      # 📄 Page Components
+│   │   ├── auth/
+│   │   │   ├── Login.tsx         # Login page
+│   │   │   └── Register.tsx      # Registration page
+│   │   │
+│   │   ├── student/
+│   │   │   ├── Dashboard.tsx     # Student dashboard
+│   │   │   ├── CreateOutpass.tsx # Create outpass form
+│   │   │   ├── OutpassHistory.tsx # View all outpasses
+│   │   │   ├── OutpassDetails.tsx # Single outpass view
+│   │   │   └── Profile.tsx       # Student profile
+│   │   │
+│   │   ├── warden/
+│   │   │   ├── Dashboard.tsx     # Warden dashboard
+│   │   │   ├── PendingRequests.tsx # Pending approvals
+│   │   │   ├── AllOutpasses.tsx  # All outpasses view
+│   │   │   ├── OutpassDetails.tsx # Outpass details
+│   │   │   └── Profile.tsx       # Warden profile
+│   │   │
+│   │   ├── security/
+│   │   │   ├── Dashboard.tsx     # Security dashboard
+│   │   │   ├── ScanQR.tsx        # QR scanner
+│   │   │   ├── ActivePasses.tsx  # Currently out students
+│   │   │   ├── History.tsx       # Check-in/out history
+│   │   │   └── Profile.tsx       # Security profile
+│   │   │
+│   │   ├── NotFound.tsx          # 404 page
+│   │   └── Unauthorized.tsx      # 403 page
+│   │
+│   ├── <strong>layouts/</strong>                    # 🎨 Layout Components
+│   │   ├── AuthLayout.tsx        # Layout for login/register
+│   │   └── MainLayout.tsx        # Layout for authenticated pages
+│   │
+│   ├── <strong>components/</strong>                 # 🧩 Reusable Components
+│   │   └── Notifications.tsx     # Toast notifications component
+│   │
+│   ├── <strong>router/</strong>                     # 🛣️ Routing Configuration
+│   │   └── index.tsx             # Route definitions & protection
+│   │
+│   ├── <strong>services/</strong>                   # 🔧 API Service Layer
+│   │   ├── api.ts                # Axios instance & interceptors
+│   │   ├── auth.service.ts       # Authentication API calls
+│   │   ├── outpass.service.ts    # Outpass CRUD operations
+│   │   ├── notification.service.ts # Notification API calls
+│   │   └── socket.service.ts     # Socket.io connection
+│   │
+│   ├── <strong>store/</strong>                      # 📦 State Management (Zustand)
+│   │   ├── authStore.ts          # Auth state (user, token, login/logout)
+│   │   └── notificationStore.ts  # Notification state
+│   │
+│   ├── <strong>types/</strong>                      # 📝 TypeScript Definitions
+│   │   └── index.ts              # Shared types & interfaces
+│   │
+│   ├── <strong>assets/</strong>                     # 🖼️ Static Assets
+│   │   └── react.svg             # Images, icons, etc.
+│   │
+│   ├── App.css                   # App-specific styles
+│   └── index.css                 # Global styles & Tailwind imports
+│
+├── <strong>public/</strong>                         # Static files served as-is
+├── <strong>index.html</strong>                      # HTML template
+├── <strong>package.json</strong>                    # Dependencies & scripts
+├── <strong>tsconfig.json</strong>                   # TypeScript configuration
+├── <strong>vite.config.ts</strong>                  # Vite configuration
+├── <strong>tailwind.config.js</strong>              # Tailwind CSS configuration
+└── <strong>.env</strong>                            # Environment variables
+                    </pre>
+                </div>
+
+                <h3>Key File Purposes</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>File/Folder</th>
+                            <th>Purpose</th>
+                            <th>Key Responsibilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">main.tsx</span></td>
+                            <td>Application Entry</td>
+                            <td>React root, router setup, global providers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">pages/</span></td>
+                            <td>Page Components</td>
+                            <td>Full-page views for each route</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">layouts/</span></td>
+                            <td>Layout Wrappers</td>
+                            <td>Common UI structure (header, sidebar, footer)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">services/</span></td>
+                            <td>API Layer</td>
+                            <td>HTTP requests, WebSocket connections</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">store/</span></td>
+                            <td>Global State</td>
+                            <td>Zustand stores for auth and notifications</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">router/</span></td>
+                            <td>Routing Logic</td>
+                            <td>Route definitions, protected routes, role-based access</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">types/</span></td>
+                            <td>Type Definitions</td>
+                            <td>TypeScript interfaces and types</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SECTION 4: ROUTING -->
+            <section id="routing">
+                <h2>🛣️ Routing & Navigation</h2>
+
+                <h3>Route Structure</h3>
+                
+                <div class="component-card">
+                    <h4>Public Routes <span class="route-badge route-public">No Auth Required</span></h4>
+                    <div class="code-block">
+/login          - User login page
+/register       - User registration page
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Student Routes <span class="route-badge route-student">Student Role</span></h4>
+                    <div class="code-block">
+/student/dashboard        - Student dashboard with stats
+/student/create-outpass   - Create new outpass request
+/student/outpass-history  - View all outpasses
+/student/outpass/:id      - View specific outpass details
+/student/profile          - Student profile & settings
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Warden Routes <span class="route-badge route-warden">Warden Role</span></h4>
+                    <div class="code-block">
+/warden/dashboard         - Warden dashboard with stats
+/warden/pending-requests  - Pending outpass approvals
+/warden/all-outpasses     - All outpasses in hostel
+/warden/outpass/:id       - View & approve/reject outpass
+/warden/profile           - Warden profile & settings
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Security Routes <span class="route-badge route-security">Security Role</span></h4>
+                    <div class="code-block">
+/security/dashboard       - Security dashboard with stats
+/security/scan-qr         - QR code scanner for check-in/out
+/security/active-passes   - Currently checked-out students
+/security/history         - Check-in/out history
+/security/profile         - Security profile & settings
+                    </div>
+                </div>
+
+                <h3>Route Protection</h3>
+                <div class="info-box">
+                    <strong>Protected Routes:</strong> All routes except /login and /register require authentication
+                    <br><strong>Role-Based Access:</strong> Routes are protected by user role (student, warden, security)
+                    <br><strong>Redirect Logic:</strong> Unauthenticated users → /login, Wrong role → /unauthorized
+                </div>
+            </section>
+
+            <!-- SECTION 5: STATE MANAGEMENT -->
+            <section id="state">
+                <h2>📦 State Management</h2>
+
+                <h3>Zustand Stores</h3>
+
+                <div class="component-card">
+                    <h4>Auth Store (authStore.ts)</h4>
+                    <p><strong>Purpose:</strong> Manage authentication state</p>
+                    <div class="code-block">
+State:
+- user: User | null
+- token: string | null
+- isAuthenticated: boolean
+
+Actions:
+- login(user, token)
+- logout()
+- updateUser(user)
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Notification Store (notificationStore.ts)</h4>
+                    <p><strong>Purpose:</strong> Manage notifications</p>
+                    <div class="code-block">
+State:
+- notifications: Notification[]
+- unreadCount: number
+
+Actions:
+- addNotification(notification)
+- markAsRead(id)
+- clearAll()
+                    </div>
+                </div>
+
+                <h3>State Persistence</h3>
+                <div class="info-box">
+                    <strong>LocalStorage:</strong> Auth token persisted for session management
+                    <br><strong>Session Management:</strong> Token validated on app load, auto-logout on expiry
+                </div>
+            </section>
+
+            <!-- SECTION 6: SERVICES -->
+            <section id="services">
+                <h2>🔧 Services Layer</h2>
+
+                <h3>API Service (api.ts)</h3>
+                <div class="component-card">
+                    <h4>Axios Instance Configuration</h4>
+                    <div class="code-block">
+Base URL: process.env.VITE_API_URL
+Timeout: 10000ms
+
+Request Interceptor:
+- Attach JWT token to Authorization header
+- Add Content-Type: application/json
+
+Response Interceptor:
+- Handle 401 (Unauthorized) → Auto logout
+- Handle 403 (Forbidden) → Redirect to unauthorized
+- Handle network errors → Show error toast
+                    </div>
+                </div>
+
+                <h3>Auth Service (auth.service.ts)</h3>
+                <div class="component-card">
+                    <h4>Authentication Operations</h4>
+                    <div class="code-block">
+login(email, password)
+- POST /api/auth/login
+- Returns: { user, token }
+
+register(userData)
+- POST /api/auth/register
+- Returns: { user, token }
+
+getProfile()
+- GET /api/auth/profile
+- Returns: { user }
+
+updateProfile(data)
+- PUT /api/auth/profile
+- Returns: { user }
+                    </div>
+                </div>
+
+                <h3>Outpass Service (outpass.service.ts)</h3>
+                <div class="component-card">
+                    <h4>Outpass CRUD Operations</h4>
+                    <div class="code-block">
+createOutpass(data)
+- POST /api/student/outpasses
+- Returns: { outpass }
+
+getMyOutpasses(filters)
+- GET /api/student/outpasses
+- Returns: { outpasses, pagination }
+
+getOutpassById(id)
+- GET /api/student/outpass/:id
+- Returns: { outpass }
+
+approveOutpass(id, remarks)
+- PATCH /api/warden/outpass/:id/approve
+- Returns: { outpass }
+
+rejectOutpass(id, reason)
+- PATCH /api/warden/outpass/:id/reject
+- Returns: { outpass }
+
+checkOut(outpassId)
+- POST /api/security/check-out
+- Returns: { success }
+
+checkIn(outpassId)
+- POST /api/security/check-in
+- Returns: { success }
+                    </div>
+                </div>
+
+                <h3>Socket Service (socket.service.ts)</h3>
+                <div class="component-card">
+                    <h4>Real-time Communication</h4>
+                    <div class="code-block">
+connect(token)
+- Establish WebSocket connection
+- Authenticate with JWT token
+
+Events Listened:
+- 'notification' → New notification received
+- 'outpass:created' → New outpass created
+- 'outpass:approved' → Outpass approved
+- 'outpass:rejected' → Outpass rejected
+- 'outpass:checked-out' → Student checked out
+- 'outpass:checked-in' → Student checked in
+
+disconnect()
+- Close WebSocket connection
+                    </div>
+                </div>
+
+                <h3>Notification Service (notification.service.ts)</h3>
+                <div class="component-card">
+                    <h4>Notification Operations</h4>
+                    <div class="code-block">
+getNotifications()
+- GET /api/notifications
+- Returns: { notifications }
+
+markAsRead(id)
+- PATCH /api/notifications/:id/read
+- Returns: { success }
+
+deleteNotification(id)
+- DELETE /api/notifications/:id
+- Returns: { success }
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 7: COMPONENTS -->
+            <section id="components">
+                <h2>🧩 Component Structure</h2>
+
+                <h3>Page Components</h3>
+                <div class="info-box">
+                    <strong>Location:</strong> src/pages/
+                    <br><strong>Purpose:</strong> Full-page views mapped to routes
+                    <br><strong>Pattern:</strong> Fetch data on mount, display UI, handle user actions
+                </div>
+
+                <h3>Layout Components</h3>
+                <div class="component-card">
+                    <h4>AuthLayout</h4>
+                    <p>Used for login and register pages</p>
+                    <p><strong>Features:</strong> Centered form, background gradient, no navigation</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>MainLayout</h4>
+                    <p>Used for all authenticated pages</p>
+                    <p><strong>Features:</strong> Header with user menu, sidebar navigation, notifications bell, logout button</p>
+                </div>
+
+                <h3>Reusable Components</h3>
+                <div class="component-card">
+                    <h4>Notifications Component</h4>
+                    <p>Displays toast notifications using react-hot-toast</p>
+                    <p><strong>Features:</strong> Success, error, info, warning toasts with auto-dismiss</p>
+                </div>
+
+                <h3>Component Best Practices</h3>
+                <div class="success-box">
+                    ✅ <strong>TypeScript:</strong> All components use TypeScript with proper typing
+                    <br>✅ <strong>Hooks:</strong> useState, useEffect, custom hooks for logic
+                    <br>✅ <strong>Error Handling:</strong> Try-catch blocks, error boundaries
+                    <br>✅ <strong>Loading States:</strong> Show spinners during API calls
+                    <br>✅ <strong>Responsive:</strong> Tailwind CSS for mobile-first design
+                </div>
+            </section>
+
+            <!-- SECTION 8: WORKFLOWS -->
+            <section id="workflows">
+                <h2>🔄 User Workflows</h2>
+
+                <h3>1. Student Creates Outpass</h3>
+                <div class="code-block">
+1. Student logs in → Redirected to /student/dashboard
+2. Clicks "Create Outpass" → Navigate to /student/create-outpass
+3. Fills form (reason, dates, destination, etc.)
+4. Form validated with Zod schema
+5. Submit → outpassService.createOutpass()
+6. API call → Backend creates outpass
+7. Success toast shown
+8. Socket.io emits 'outpass:created' event
+9. Warden receives real-time notification
+10. Student redirected to /student/outpass-history
+                </div>
+
+                <h3>2. Warden Approves Outpass</h3>
+                <div class="code-block">
+1. Warden receives notification (Socket.io)
+2. Clicks notification → Navigate to /warden/pending-requests
+3. Views outpass details
+4. Clicks "Approve" button
+5. Modal opens for remarks
+6. Submit → outpassService.approveOutpass()
+7. Backend generates QR code
+8. Backend sends email with PDF
+9. Socket.io emits 'outpass:approved' event
+10. Student receives real-time notification
+11. Outpass status updated to "Approved"
+                </div>
+
+                <h3>3. Security Checks Out Student</h3>
+                <div class="code-block">
+1. Security officer opens /security/scan-qr
+2. Camera activates (html5-qrcode)
+3. Student shows QR code
+4. QR scanned → Decoded data extracted
+5. outpassService.checkOut(outpassId)
+6. Backend verifies QR code
+7. Backend updates outpass status to "Checked Out"
+8. Socket.io emits 'outpass:checked-out' event
+9. Student receives notification
+10. Success toast shown to security officer
+                </div>
+            </section>
+
+            <!-- SECTION 9: ENVIRONMENT VARIABLES -->
+            <section id="env">
+                <h2>⚙️ Environment Configuration</h2>
+
+                <div class="component-card">
+                    <h4>.env File</h4>
+                    <div class="code-block">
+VITE_API_URL=http://localhost:3000
+VITE_SOCKET_URL=http://localhost:3000
+                    </div>
+                    <p><strong>Note:</strong> Vite requires VITE_ prefix for environment variables</p>
+                </div>
+            </section>
+
+            <!-- SECTION 10: BUILD & DEPLOYMENT -->
+            <section id="build">
+                <h2>🚀 Build & Deployment</h2>
+
+                <h3>Development</h3>
+                <div class="code-block">
+npm run dev
+- Starts Vite dev server on http://localhost:5173
+- Hot Module Replacement (HMR) enabled
+- Fast refresh for React components
+                </div>
+
+                <h3>Production Build</h3>
+                <div class="code-block">
+npm run build
+- TypeScript compilation
+- Vite optimized build
+- Output: dist/ folder
+- Minified, tree-shaken, code-split bundles
+                </div>
+
+                <h3>Preview Production Build</h3>
+                <div class="code-block">
+npm run preview
+- Serves production build locally
+- Test before deployment
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Campus Pass Frontend Documentation</p>
+            <p>Built with React, TypeScript, Vite, and Tailwind CSS</p>
+        </footer>
+    </div>
+</body>
+</html>

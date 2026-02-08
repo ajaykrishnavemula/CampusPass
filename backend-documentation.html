@@ -1,0 +1,2355 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Pass Backend - Complete Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2d3748;
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+            scroll-margin-top: 80px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .tech-card h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .folder-structure {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .folder-structure pre {
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .flow-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .flow-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        .flow-step:last-child::after {
+            content: '';
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .endpoint-card {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #48bb78;
+        }
+
+        .endpoint-card.post {
+            border-left-color: #4299e1;
+        }
+
+        .endpoint-card.put {
+            border-left-color: #ed8936;
+        }
+
+        .endpoint-card.delete {
+            border-left-color: #f56565;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-right: 10px;
+        }
+
+        .method.get {
+            background: #48bb78;
+            color: white;
+        }
+
+        .method.post {
+            background: #4299e1;
+            color: white;
+        }
+
+        .method.put {
+            background: #ed8936;
+            color: white;
+        }
+
+        .method.delete {
+            background: #f56565;
+            color: white;
+        }
+
+        .method.patch {
+            background: #9f7aea;
+            color: white;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin: 2px;
+            font-weight: 600;
+        }
+
+        .role-student {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        .role-warden {
+            background: #fbd38d;
+            color: #7c2d12;
+        }
+
+        .role-security {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .role-admin {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .highlight {
+            background: #fef5e7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Campus Pass Backend</h1>
+            <p>Complete Technical Documentation & Architecture Guide</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#technologies">Technologies</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#folder-structure">Folder Structure</a></li>
+                <li><a href="#flow">Logic Flow</a></li>
+                <li><a href="#models">Data Models</a></li>
+                <li><a href="#api">API Endpoints</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#socket">Real-time</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <!-- SECTION 1: TECHNOLOGIES -->
+            <section id="technologies">
+                <h2>🛠️ Technologies Used</h2>
+                
+                <h3>Core Technologies</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Node.js (v18+)</h4>
+                        <p><strong>Purpose:</strong> JavaScript runtime environment</p>
+                        <p><strong>Why:</strong> Enables server-side JavaScript execution with excellent performance and scalability</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>TypeScript</h4>
+                        <p><strong>Purpose:</strong> Type-safe JavaScript superset</p>
+                        <p><strong>Why:</strong> Provides static typing, better IDE support, and catches errors at compile-time</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Fastify</h4>
+                        <p><strong>Purpose:</strong> Web framework</p>
+                        <p><strong>Why:</strong> Fast, low overhead, highly performant alternative to Express with built-in schema validation</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>MongoDB</h4>
+                        <p><strong>Purpose:</strong> NoSQL database</p>
+                        <p><strong>Why:</strong> Flexible schema, excellent for document-based data, scales horizontally</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Mongoose</h4>
+                        <p><strong>Purpose:</strong> MongoDB ODM</p>
+                        <p><strong>Why:</strong> Provides schema validation, middleware, and elegant MongoDB object modeling</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Socket.io</h4>
+                        <p><strong>Purpose:</strong> Real-time communication</p>
+                        <p><strong>Why:</strong> Enables bidirectional event-based communication for live notifications</p>
+                    </div>
+                </div>
+
+                <h3>Security & Authentication</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>JWT (@fastify/jwt)</h4>
+                        <p><strong>Purpose:</strong> Token-based authentication</p>
+                        <p><strong>Why:</strong> Stateless authentication, secure, scalable</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>bcryptjs</h4>
+                        <p><strong>Purpose:</strong> Password hashing</p>
+                        <p><strong>Why:</strong> Industry-standard password encryption with salt rounds</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Helmet (@fastify/helmet)</h4>
+                        <p><strong>Purpose:</strong> Security headers</p>
+                        <p><strong>Why:</strong> Sets various HTTP headers to protect against common vulnerabilities</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>CORS (@fastify/cors)</h4>
+                        <p><strong>Purpose:</strong> Cross-Origin Resource Sharing</p>
+                        <p><strong>Why:</strong> Enables secure cross-origin requests from frontend</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Rate Limit (@fastify/rate-limit)</h4>
+                        <p><strong>Purpose:</strong> API rate limiting</p>
+                        <p><strong>Why:</strong> Prevents abuse and DDoS attacks (100 requests per 15 minutes)</p>
+                    </div>
+                </div>
+
+                <h3>Additional Services</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Nodemailer</h4>
+                        <p><strong>Purpose:</strong> Email service</p>
+                        <p><strong>Why:</strong> Sends automated emails for outpass approvals, rejections, and notifications</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>PDFKit</h4>
+                        <p><strong>Purpose:</strong> PDF generation</p>
+                        <p><strong>Why:</strong> Creates printable outpass documents with QR codes</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>QRCode</h4>
+                        <p><strong>Purpose:</strong> QR code generation</p>
+                        <p><strong>Why:</strong> Generates unique QR codes for outpass verification</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Winston</h4>
+                        <p><strong>Purpose:</strong> Logging</p>
+                        <p><strong>Why:</strong> Structured logging for debugging and monitoring</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Zod</h4>
+                        <p><strong>Purpose:</strong> Schema validation</p>
+                        <p><strong>Why:</strong> Runtime type checking and validation for API requests</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>dotenv</h4>
+                        <p><strong>Purpose:</strong> Environment variables</p>
+                        <p><strong>Why:</strong> Manages configuration securely across environments</p>
+                    </div>
+                </div>
+
+                <h3>Development & Testing</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Jest</h4>
+                        <p><strong>Purpose:</strong> Testing framework</p>
+                        <p><strong>Why:</strong> Comprehensive unit and integration testing</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Supertest</h4>
+                        <p><strong>Purpose:</strong> HTTP testing</p>
+                        <p><strong>Why:</strong> Tests API endpoints and HTTP responses</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>ts-node-dev</h4>
+                        <p><strong>Purpose:</strong> Development server</p>
+                        <p><strong>Why:</strong> Hot-reload TypeScript during development</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>ESLint & Prettier</h4>
+                        <p><strong>Purpose:</strong> Code quality</p>
+                        <p><strong>Why:</strong> Enforces consistent code style and catches errors</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: ARCHITECTURE -->
+            <section id="architecture">
+                <h2>🏗️ System Architecture</h2>
+                
+                <div class="info-box">
+                    <strong>Architecture Pattern:</strong> Layered Architecture (MVC + Services)
+                    <br><strong>Design Philosophy:</strong> Separation of Concerns, Single Responsibility Principle
+                </div>
+
+                <h3>Architecture Layers</h3>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <strong>1. Entry Point (index.ts)</strong>
+                        <p>Server initialization, plugin registration, database connection</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>2. Routes Layer</strong>
+                        <p>HTTP endpoint definitions, route grouping, middleware attachment</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>3. Middleware Layer</strong>
+                        <p>Authentication, validation, error handling, request preprocessing</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>4. Controllers Layer</strong>
+                        <p>Request handling, response formatting, business logic orchestration</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>5. Services Layer</strong>
+                        <p>Business logic, external service integration, complex operations</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>6. Models Layer</strong>
+                        <p>Data schemas, database operations, data validation</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>7. Database (MongoDB)</strong>
+                        <p>Data persistence, queries, transactions</p>
+                    </div>
+                </div>
+
+                <h3>Component Interaction</h3>
+                <div class="code-block">
+Client Request
+    ↓
+Fastify Server (index.ts)
+    ↓
+CORS & Security Middleware (helmet, cors)
+    ↓
+Rate Limiting (100 req/15min)
+    ↓
+Routes (auth, outpass, notification)
+    ↓
+Authentication Middleware (JWT verification)
+    ↓
+Validation Middleware (Zod schemas)
+    ↓
+Controllers (business logic orchestration)
+    ↓
+Services (AuthService, OutpassService, etc.)
+    ↓
+Models (User, Outpass, Notification)
+    ↓
+MongoDB Database
+    ↓
+Response back through layers
+    ↓
+Socket.io (real-time notifications)
+    ↓
+Client receives response + live updates
+                </div>
+            </section>
+
+            <!-- SECTION 3: FOLDER STRUCTURE -->
+            <section id="folder-structure">
+                <h2>📁 Folder Structure Explained</h2>
+                
+                <div class="folder-structure">
+                    <pre>
+backend/
+│
+├── src/                          # Source code directory
+│   │
+│   ├── <strong>index.ts</strong>                    # 🚀 Main entry point - Server initialization
+│   │   • Fastify server setup
+│   │   • Plugin registration (CORS, Helmet, JWT)
+│   │   • Database connection
+│   │   • Route registration
+│   │   • Socket.io initialization
+│   │   • Error handlers
+│   │
+│   ├── <strong>server.ts</strong>                   # Alternative server setup (modular approach)
+│   │
+│   ├── <strong>config/</strong>                     # ⚙️ Configuration files
+│   │   ├── database.ts           # MongoDB connection logic
+│   │   └── index.ts              # Config exports
+│   │
+│   ├── <strong>models/</strong>                     # 📊 Database Models (Mongoose Schemas)
+│   │   ├── User.ts               # User schema (Student, Warden, Security, Admin)
+│   │   ├── Outpass.ts            # Outpass schema (requests, approvals, check-in/out)
+│   │   ├── Notification.ts       # Notification schema
+│   │   └── index.ts              # Model exports
+│   │
+│   ├── <strong>routes/</strong>                     # 🛣️ API Route Definitions
+│   │   ├── auth.routes.ts        # Authentication endpoints
+│   │   ├── outpass.routes.ts     # Outpass management endpoints
+│   │   ├── notification.routes.ts # Notification endpoints
+│   │   ├── student.routes.ts     # Student-specific routes
+│   │   ├── warden.routes.ts      # Warden-specific routes
+│   │   ├── security.routes.ts    # Security-specific routes
+│   │   └── index.ts              # Route exports
+│   │
+│   ├── <strong>controllers/</strong>                # 🎮 Request Handlers
+│   │   ├── auth.controller.ts    # Login, register, profile management
+│   │   ├── student.controller.ts # Student operations
+│   │   ├── warden.controller.ts  # Warden operations (approve/reject)
+│   │   ├── security.controller.ts # Security operations (check-in/out)
+│   │   └── notification.controller.ts # Notification management
+│   │
+│   ├── <strong>services/</strong>                   # 🔧 Business Logic Layer
+│   │   ├── AuthService.ts        # Authentication logic, JWT generation
+│   │   ├── OutpassService.ts     # Outpass CRUD, status management
+│   │   ├── NotificationService.ts # Notification creation & delivery
+│   │   ├── EmailService.ts       # Email sending (Nodemailer)
+│   │   ├── PDFService.ts         # PDF generation (PDFKit)
+│   │   ├── QRService.ts          # QR code generation & verification
+│   │   ├── SocketService.ts      # Real-time Socket.io events
+│   │   └── index.ts              # Service exports
+│   │
+│   ├── <strong>middleware/</strong>                 # 🛡️ Request Middleware
+│   │   ├── auth.middleware.ts    # JWT verification, role checking
+│   │   ├── validation.middleware.ts # Request validation (Zod)
+│   │   ├── error.middleware.ts   # Global error handling
+│   │   └── index.ts              # Middleware exports
+│   │
+│   ├── <strong>socket/</strong>                     # 🔌 Socket.io Configuration
+│   │   ├── index.ts              # Socket.io server setup
+│   │   └── events.ts             # Socket event handlers
+│   │
+│   ├── <strong>utils/</strong>                      # 🔨 Utility Functions
+│   │   ├── logger.ts             # Winston logger configuration
+│   │   └── hash.ts               # Password hashing utilities
+│   │
+│   ├── <strong>types/</strong>                      # 📝 TypeScript Type Definitions
+│   │   ├── index.ts              # Shared types & interfaces
+│   │   └── fastify.d.ts          # Fastify type extensions
+│   │
+│   ├── <strong>scripts/</strong>                    # 📜 Utility Scripts
+│   │   └── seed.ts               # Database seeding script
+│   │
+│   └── <strong>__tests__/</strong>                  # 🧪 Test Files
+│       ├── setup.ts              # Test configuration
+│       ├── unit/                 # Unit tests
+│       └── integration/          # Integration tests
+│
+├── <strong>.env.example</strong>                    # Environment variables template
+├── <strong>package.json</strong>                    # Dependencies & scripts
+├── <strong>tsconfig.json</strong>                   # TypeScript configuration
+├── <strong>jest.config.js</strong>                  # Jest testing configuration
+└── <strong>README.md</strong>                       # Project documentation
+                    </pre>
+                </div>
+
+                <h3>Key File Purposes</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>File/Folder</th>
+                            <th>Purpose</th>
+                            <th>Key Responsibilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">index.ts</span></td>
+                            <td>Application Entry Point</td>
+                            <td>Server startup, plugin registration, database connection</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">models/</span></td>
+                            <td>Data Layer</td>
+                            <td>Define schemas, validation rules, database operations</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">routes/</span></td>
+                            <td>API Endpoints</td>
+                            <td>Define HTTP routes, attach middleware, map to controllers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">controllers/</span></td>
+                            <td>Request Handlers</td>
+                            <td>Handle HTTP requests, call services, format responses</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">services/</span></td>
+                            <td>Business Logic</td>
+                            <td>Complex operations, external integrations, reusable logic</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">middleware/</span></td>
+                            <td>Request Processing</td>
+                            <td>Authentication, validation, error handling</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">socket/</span></td>
+                            <td>Real-time Communication</td>
+                            <td>WebSocket connections, live notifications</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SECTION 4: LOGIC FLOW -->
+            <section id="flow">
+                <h2>🔄 Application Logic Flow</h2>
+
+                <h3>1. Server Startup Flow</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <strong>Step 1: Load Environment Variables</strong>
+                        <p>dotenv loads .env file → Configuration available</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 2: Create Fastify Instance</strong>
+                        <p>Initialize with logger, trust proxy settings</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 3: Register Security Plugins</strong>
+                        <p>CORS → Helmet → JWT → Rate Limiting</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 4: Connect to MongoDB</strong>
+                        <p>Mongoose connects to database, handles connection events</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 5: Initialize Services</strong>
+                        <p>Email Service (SMTP) → Socket.io → Other services</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 6: Register Routes</strong>
+                        <p>/api/auth → /api/outpasses → /api/notifications</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 7: Set Error Handlers</strong>
+                        <p>Global error handler → 404 handler</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 8: Start Server</strong>
+                        <p>Listen on PORT (default: 3000) → Server ready! 🚀</p>
+                    </div>
+                </div>
+
+                <h3>2. Authentication Flow (Login)</h3>
+                <div class="code-block">
+1. Client sends POST /api/auth/login
+   Body: { email, password }
+
+2. Request hits auth.routes.ts
+   → Routes to auth.controller.ts → login()
+
+3. Controller validates input
+   → Checks if user exists in database
+
+4. AuthService.comparePassword()
+   → bcrypt compares hashed password
+
+5. If valid:
+   → Generate JWT token (expires in 7 days)
+   → Return user data + token
+
+6. Client stores token
+   → Includes in Authorization header for future requests
+
+7. Protected routes verify token via auth.middleware.ts
+   → Decodes JWT → Attaches user to request object
+                </div>
+
+                <h3>3. Outpass Creation Flow (Student)</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <strong>Step 1: Student Creates Outpass</strong>
+                        <p>POST /api/outpasses with details (destination, dates, purpose)</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 2: Validation</strong>
+                        <p>Middleware validates request body using Zod schema</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 3: Controller Processing</strong>
+                        <p>student.controller.ts → createOutpass()</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 4: Service Layer</strong>
+                        <p>OutpassService creates outpass with status: PENDING</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 5: Generate QR Code</strong>
+                        <p>QRService generates unique QR code for outpass</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 6: Save to Database</strong>
+                        <p>Outpass model saves to MongoDB</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 7: Create Notification</strong>
+                        <p>NotificationService notifies warden of new request</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 8: Real-time Update</strong>
+                        <p>SocketService emits 'outpass:created' event to warden</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 9: Email Notification</strong>
+                        <p>EmailService sends email to warden (if configured)</p>
+                    </div>
+                </div>
+
+                <h3>4. Outpass Approval Flow (Warden)</h3>
+                <div class="code-block">
+1. Warden receives notification (Socket.io + Email)
+
+2. Warden views pending outpasses
+   GET /api/outpasses/pending
+
+3. Warden approves outpass
+   POST /api/outpasses/:id/approve
+   Body: { remarks: "Approved for valid reason" }
+
+4. warden.controller.ts → approveOutpass()
+
+5. OutpassService updates:
+   • status: PENDING → APPROVED
+   • approvedAt: current timestamp
+   • warden: warden's user ID
+   • wardenRemarks: approval message
+
+6. Generate PDF with QR code
+   PDFService creates printable outpass document
+
+7. Create notifications:
+   • Student: "Your outpass has been approved"
+   • Security: "New approved outpass available"
+
+8. Real-time updates:
+   • Socket.io emits 'outpass:approved' to student
+   • Socket.io emits to security personnel
+
+9. Email notifications:
+   • Student receives approval email with PDF attachment
+   • Security receives notification
+
+10. Student can now download PDF and show at gate
+                </div>
+
+                <h3>5. Check-Out Flow (Security)</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <strong>Step 1: Student Arrives at Gate</strong>
+                        <p>Shows QR code (from PDF or mobile app)</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 2: Security Scans QR</strong>
+                        <p>POST /api/outpasses/verify-qr with QR data</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 3: QR Verification</strong>
+                        <p>QRService validates QR code authenticity</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 4: Outpass Validation</strong>
+                        <p>Check: status=APPROVED, dates valid, not expired</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 5: Check-Out</strong>
+                        <p>POST /api/outpasses/:id/checkout</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 6: Update Status</strong>
+                        <p>status: APPROVED → CHECKED_OUT, checkOutTime: now</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 7: Notifications</strong>
+                        <p>Student, Warden receive check-out notification</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Step 8: Real-time Update</strong>
+                        <p>Socket.io broadcasts 'outpass:checked_out' event</p>
+                    </div>
+                </div>
+
+                <h3>6. Real-time Notification Flow</h3>
+                <div class="code-block">
+Socket.io Event Flow:
+
+1. Client connects to WebSocket
+   ws://localhost:3000
+
+2. Server authenticates connection
+   Verifies JWT token from handshake
+
+3. User joins role-specific rooms:
+   • Students: room "student-{userId}"
+   • Wardens: room "warden-{hostel}"
+   • Security: room "security"
+
+4. When event occurs (e.g., outpass approved):
+   
+   a) Service layer triggers event
+      SocketService.emitOutpassApproved(outpass)
+   
+   b) Socket.io emits to specific rooms:
+      io.to(`student-${studentId}`).emit('outpass:approved', data)
+      io.to(`security`).emit('outpass:approved', data)
+   
+   c) Connected clients receive event instantly
+      Client updates UI in real-time
+
+5. Notification also saved to database
+   For users who are offline
+
+6. When user comes online:
+   Fetches unread notifications
+   GET /api/notifications?unread=true
+                </div>
+            </section>
+
+            <!-- SECTION 5: DATA MODELS -->
+            <section id="models">
+                <h2>📊 Data Models</h2>
+
+                <h3>User Model</h3>
+                <div class="code-block">
+interface IUser {
+  // Basic Info
+  email: string;              // Unique email
+  password: string;           // Hashed with bcrypt
+  name: string;               // Full name
+  role: UserRole;             // 0=Student, 1=Admin, 2=Warden, 3=Security
+  phone?: string;             // Contact number
+  
+  // Student-specific
+  hostel?: string;            // Hostel name
+  roomNumber?: string;        // Room number
+  department?: string;        // Academic department
+  year?: number;              // Academic year
+  rollNumber?: string;        // Student ID
+  gender?: string;            // Gender
+  remarkScore?: number;       // Behavior score
+  inCampus?: boolean;         // Currently in campus
+  
+  // Status
+  isActive: boolean;          // Account active/inactive
+  photoUrl?: string;          // Profile picture
+  
+  // Timestamps
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+Roles:
+• STUDENT (0): Create outpasses, view own history
+• ADMIN (1): Full system access
+• WARDEN (2): Approve/reject outpasses for their hostel
+• SECURITY (3): Check-in/out students, verify QR codes
+                </div>
+
+                <h3>Outpass Model</h3>
+                <div class="code-block">
+interface IOutpass {
+  // References
+  student: ObjectId;          // Reference to User
+  warden?: ObjectId;          // Approving warden
+  checkOutBy?: ObjectId;      // Security who checked out
+  checkInBy?: ObjectId;       // Security who checked in
+  
+  // Outpass Details
+  outpassNumber: string;      // Unique identifier (auto-generated)
+  type: OutpassType;          // local, home, emergency, medical, other
+  purpose: string;            // Reason for outpass
+  destination: string;        // Where student is going
+  
+  // Dates
+  fromDate: Date;             // Start date/time
+  toDate: Date;               // Expected return date/time
+  
+  // Status & Approval
+  status: OutpassStatus;      // pending, approved, rejected, etc.
+  wardenRemarks?: string;     // Warden's comments
+  approvedAt?: Date;          // Approval timestamp
+  rejectedAt?: Date;          // Rejection timestamp
+  rejectionReason?: string;   // Why rejected
+  
+  // Check-in/out
+  checkOutTime?: Date;        // When student left
+  checkInTime?: Date;         // When student returned
+  
+  // Security
+  qrCode?: string;            // QR code data
+  isOverdue: boolean;         // Past return date
+  
+  // Timestamps
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+Status Flow:
+PENDING → APPROVED → CHECKED_OUT → CHECKED_IN
+        ↓
+      REJECTED
+        ↓
+      CANCELLED (by student)
+        ↓
+      OVERDUE (past return date)
+                </div>
+
+                <h3>Notification Model</h3>
+                <div class="code-block">
+interface INotification {
+  user: ObjectId;             // Recipient user
+  title: string;              // Notification title
+  message: string;            // Notification content
+  type: string;               // outpass, system, alert
+  relatedOutpass?: ObjectId;  // Link to outpass if relevant
+  isRead: boolean;            // Read status
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+Notification Types:
+• outpass_created: New outpass request
+• outpass_approved: Outpass approved
+• outpass_rejected: Outpass rejected
+• outpass_checked_out: Student checked out
+• outpass_checked_in: Student checked in
+• outpass_overdue: Outpass overdue
+• system_alert: System-wide announcement
+                </div>
+            </section>
+
+            <!-- SECTION 6: API ENDPOINTS -->
+            <section id="api">
+                <h2>🌐 API Endpoints</h2>
+
+                <h3>Authentication Endpoints</h3>
+                
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/auth/register</strong>
+                    <p>Register new user (Student, Warden, Security)</p>
+                    <p><strong>Body:</strong> { email, password, name, role, ... }</p>
+                    <p><strong>Response:</strong> User object + JWT token</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/auth/login</strong>
+                    <p>Login user</p>
+                    <p><strong>Body:</strong> { email, password }</p>
+                    <p><strong>Response:</strong> User object + JWT token</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/auth/me</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Get current user profile</p>
+                    <p><strong>Headers:</strong> Authorization: Bearer {token}</p>
+                </div>
+
+                <div class="endpoint-card put">
+                    <span class="method put">PUT</span>
+                    <strong>/api/auth/profile</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Update user profile</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/auth/change-password</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Change password</p>
+                    <p><strong>Body:</strong> { currentPassword, newPassword }</p>
+                </div>
+
+                <h3>Outpass Endpoints</h3>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/outpasses</strong>
+                    <span class="role-badge role-student">Student</span>
+                    <p>Create new outpass request</p>
+                    <p><strong>Body:</strong> { type, purpose, destination, fromDate, toDate }</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses</strong>
+                    <span class="role-badge role-student">Student</span>
+                    <p>Get student's own outpasses</p>
+                    <p><strong>Query:</strong> ?status=pending&limit=10</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/pending</strong>
+                    <span class="role-badge role-warden">Warden</span>
+                    <p>Get pending outpasses for warden's hostel</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/all</strong>
+                    <span class="role-badge role-warden">Warden</span>
+                    <span class="role-badge role-security">Security</span>
+                    <p>Get all outpasses (filtered by role)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/active</strong>
+                    <span class="role-badge role-security">Security</span>
+                    <p>Get currently active outpasses (checked out students)</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/outpasses/:id/approve</strong>
+                    <span class="role-badge role-warden">Warden</span>
+                    <p>Approve outpass request</p>
+                    <p><strong>Body:</strong> { remarks: "Approved" }</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/outpasses/:id/reject</strong>
+                    <span class="role-badge role-warden">Warden</span>
+                    <p>Reject outpass request</p>
+                    <p><strong>Body:</strong> { reason: "Invalid reason" }</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/outpasses/:id/checkout</strong>
+                    <span class="role-badge role-security">Security</span>
+                    <p>Check out student (leaving campus)</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/outpasses/:id/checkin</strong>
+                    <span class="role-badge role-security">Security</span>
+                    <p>Check in student (returning to campus)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/:id/pdf</strong>
+                    <span class="role-badge role-student">Student</span>
+                    <p>Download outpass PDF with QR code</p>
+                </div>
+
+                <div class="endpoint-card post">
+                    <span class="method post">POST</span>
+                    <strong>/api/outpasses/verify-qr</strong>
+                    <span class="role-badge role-security">Security</span>
+                    <p>Verify QR code authenticity</p>
+                    <p><strong>Body:</strong> { qrCode: "encrypted-qr-data" }</p>
+                </div>
+
+                <h3>Notification Endpoints</h3>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/notifications</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Get user's notifications</p>
+                    <p><strong>Query:</strong> ?unread=true&limit=20</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/notifications/unread-count</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Get count of unread notifications</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method patch">PATCH</span>
+                    <strong>/api/notifications/:id/read</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Mark notification as read</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method patch">PATCH</span>
+                    <strong>/api/notifications/read-all</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Mark all notifications as read</p>
+                </div>
+
+                <div class="endpoint-card delete">
+                    <span class="method delete">DELETE</span>
+                    <strong>/api/notifications/:id</strong>
+                    <span class="role-badge role-student">All Roles</span>
+                    <p>Delete a notification</p>
+                </div>
+
+                <h3>Statistics Endpoints</h3>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/stats</strong>
+                    <span class="role-badge role-student">Student</span>
+                    <p>Get student's outpass statistics</p>
+                    <p><strong>Response:</strong> Total, pending, approved, rejected counts</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/stats/warden</strong>
+                    <span class="role-badge role-warden">Warden</span>
+                    <p>Get warden's hostel statistics</p>
+                    <p><strong>Response:</strong> Pending requests, approved today, active outpasses</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <strong>/api/outpasses/stats/security</strong>
+                    <span class="role-badge role-security">Security</span>
+                    <p>Get security dashboard statistics</p>
+                    <p><strong>Response:</strong> Active outpasses, checked out today, overdue</p>
+                </div>
+            </section>
+
+            <!-- SECTION 7: SERVICES -->
+            <section id="services">
+                <h2>🔧 Services Layer</h2>
+
+                <div class="info-box">
+                    <strong>Services</strong> contain the core business logic and are reusable across controllers. They handle complex operations, external integrations, and maintain separation of concerns.
+                </div>
+
+                <h3>AuthService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Handles authentication and authorization logic</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>register(userData):</strong> Create new user account with hashed password</li>
+                        <li><strong>login(email, password):</strong> Authenticate user and generate JWT token</li>
+                        <li><strong>verifyToken(token):</strong> Validate JWT token and extract user data</li>
+                        <li><strong>hashPassword(password):</strong> Hash password using bcrypt (10 salt rounds)</li>
+                        <li><strong>comparePassword(plain, hashed):</strong> Compare passwords securely</li>
+                        <li><strong>generateToken(userId, role):</strong> Create JWT with 7-day expiration</li>
+                    </ul>
+                </div>
+
+                <h3>OutpassService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Manages all outpass-related operations and business rules</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>createOutpass(data):</strong> Create new outpass with auto-generated number</li>
+                        <li><strong>approveOutpass(id, wardenId, remarks):</strong> Approve and generate QR code</li>
+                        <li><strong>rejectOutpass(id, reason):</strong> Reject with reason</li>
+                        <li><strong>checkOut(id, securityId):</strong> Mark student as checked out</li>
+                        <li><strong>checkIn(id, securityId):</strong> Mark student as checked in</li>
+                        <li><strong>cancelOutpass(id):</strong> Student cancels their request</li>
+                        <li><strong>checkOverdue():</strong> Cron job to mark overdue outpasses</li>
+                        <li><strong>getStatistics(userId, role):</strong> Generate role-specific stats</li>
+                    </ul>
+                </div>
+
+                <h3>NotificationService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Creates and manages notifications for all users</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>createNotification(userId, title, message, type):</strong> Create notification</li>
+                        <li><strong>notifyOutpassCreated(outpass):</strong> Notify warden of new request</li>
+                        <li><strong>notifyOutpassApproved(outpass):</strong> Notify student and security</li>
+                        <li><strong>notifyOutpassRejected(outpass):</strong> Notify student</li>
+                        <li><strong>notifyCheckOut(outpass):</strong> Notify student and warden</li>
+                        <li><strong>notifyCheckIn(outpass):</strong> Notify student and warden</li>
+                        <li><strong>notifyOverdue(outpass):</strong> Alert all relevant parties</li>
+                        <li><strong>markAsRead(notificationId):</strong> Update read status</li>
+                        <li><strong>getUnreadCount(userId):</strong> Count unread notifications</li>
+                    </ul>
+                </div>
+
+                <h3>EmailService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Sends automated emails using Nodemailer (SMTP)</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>initialize(config):</strong> Setup SMTP transporter</li>
+                        <li><strong>sendWelcomeEmail(user):</strong> Welcome new users</li>
+                        <li><strong>sendOutpassApproved(outpass, student):</strong> Approval notification</li>
+                        <li><strong>sendOutpassRejected(outpass, student):</strong> Rejection notification</li>
+                        <li><strong>sendOverdueAlert(outpass, student):</strong> Overdue warning</li>
+                        <li><strong>sendPasswordChanged(user):</strong> Security notification</li>
+                    </ul>
+                    
+                    <h4>Email Templates</h4>
+                    <p>HTML templates with campus branding, responsive design</p>
+                </div>
+
+                <h3>PDFService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Generates printable outpass documents with QR codes</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>generateOutpassPDF(outpass):</strong> Create PDF document</li>
+                        <li><strong>addHeader(doc):</strong> Add campus logo and header</li>
+                        <li><strong>addStudentDetails(doc, student):</strong> Student information</li>
+                        <li><strong>addOutpassDetails(doc, outpass):</strong> Outpass information</li>
+                        <li><strong>addQRCode(doc, qrCode):</strong> Embed QR code image</li>
+                        <li><strong>addFooter(doc):</strong> Terms and conditions</li>
+                    </ul>
+                    
+                    <h4>PDF Contents</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Campus header with logo</li>
+                        <li>Outpass number and type</li>
+                        <li>Student details (name, roll number, hostel)</li>
+                        <li>Destination and purpose</li>
+                        <li>Valid dates and times</li>
+                        <li>QR code for verification</li>
+                        <li>Warden approval signature</li>
+                        <li>Terms and conditions</li>
+                    </ul>
+                </div>
+
+                <h3>QRService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Generates and verifies QR codes for outpass authentication</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>generateQRCode(outpassId):</strong> Create encrypted QR code</li>
+                        <li><strong>verifyQRCode(qrData):</strong> Decrypt and validate QR code</li>
+                        <li><strong>encryptData(data):</strong> Encrypt outpass data</li>
+                        <li><strong>decryptData(encrypted):</strong> Decrypt QR data</li>
+                    </ul>
+                    
+                    <h4>QR Code Data</h4>
+                    <div class="code-block">
+{
+  outpassId: "OP-2024-001",
+  studentId: "user-id",
+  validFrom: "2024-01-01T10:00:00Z",
+  validTo: "2024-01-03T18:00:00Z",
+  signature: "encrypted-hash"
+}
+                    </div>
+                </div>
+
+                <h3>SocketService</h3>
+                <div class="tech-card">
+                    <h4>Purpose</h4>
+                    <p>Manages real-time WebSocket connections and events</p>
+                    
+                    <h4>Key Methods</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>initialize(httpServer):</strong> Setup Socket.io server</li>
+                        <li><strong>authenticateSocket(socket):</strong> Verify JWT from handshake</li>
+                        <li><strong>joinRooms(socket, user):</strong> Join role-specific rooms</li>
+                        <li><strong>emitToUser(userId, event, data):</strong> Send to specific user</li>
+                        <li><strong>emitToRole(role, event, data):</strong> Broadcast to role</li>
+                        <li><strong>emitToHostel(hostel, event, data):</strong> Send to hostel</li>
+                        <li><strong>broadcastSystemAlert(message):</strong> System-wide notification</li>
+                    </ul>
+                    
+                    <h4>Socket Events</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>connection:</strong> New client connected</li>
+                        <li><strong>disconnect:</strong> Client disconnected</li>
+                        <li><strong>ping:</strong> Health check from client</li>
+                        <li><strong>pong:</strong> Health check response</li>
+                        <li><strong>outpass:created:</strong> New outpass request</li>
+                        <li><strong>outpass:approved:</strong> Outpass approved</li>
+                        <li><strong>outpass:rejected:</strong> Outpass rejected</li>
+                        <li><strong>outpass:checked_out:</strong> Student left campus</li>
+                        <li><strong>outpass:checked_in:</strong> Student returned</li>
+                        <li><strong>outpass:overdue:</strong> Outpass overdue</li>
+                        <li><strong>notification:new:</strong> New notification</li>
+                        <li><strong>notification:unread_count:</strong> Unread count update</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 8: SOCKET.IO -->
+            <section id="socket">
+                <h2>🔌 Real-time Communication (Socket.io)</h2>
+
+                <div class="success-box">
+                    <strong>Why Socket.io?</strong> Enables instant, bidirectional communication between server and clients. Perfect for real-time notifications, live updates, and collaborative features.
+                </div>
+
+                <h3>Connection Flow</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <strong>1. Client Initiates Connection</strong>
+                        <p>Frontend connects to ws://localhost:3000 with JWT token</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>2. Server Authentication</strong>
+                        <p>Middleware verifies JWT token from handshake auth</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>3. User Identification</strong>
+                        <p>Extract user ID and role from decoded token</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>4. Room Assignment</strong>
+                        <p>Join role-specific rooms based on user type</p>
+                    </div>
+                    <div class="flow-step">
+                        <strong>5. Connection Established</strong>
+                        <p>Client ready to receive real-time events</p>
+                    </div>
+                </div>
+
+                <h3>Room Structure</h3>
+                <div class="code-block">
+Room Hierarchy:
+
+1. User-specific rooms:
+   • student-{userId}     → Individual student
+   • warden-{userId}      → Individual warden
+   • security-{userId}    → Individual security
+
+2. Role-based rooms:
+   • students             → All students
+   • wardens              → All wardens
+   • security             → All security personnel
+   • admins               → All administrators
+
+3. Hostel-based rooms:
+   • hostel-{hostelName}  → All users in a hostel
+   • warden-hostel-{name} → Warden's hostel
+
+4. Global room:
+   • all-users            → System-wide broadcasts
+                </div>
+
+                <h3>Event Examples</h3>
+
+                <h4>1. Outpass Created Event</h4>
+                <div class="code-block">
+// Server-side (OutpassService)
+const outpass = await Outpass.create(data);
+
+// Emit to warden of student's hostel
+socketService.emitToHostel(
+  student.hostel,
+  'outpass:created',
+  {
+    outpass: outpass,
+    student: student,
+    message: 'New outpass request received'
+  }
+);
+
+// Client-side (Frontend)
+socket.on('outpass:created', (data) => {
+  // Show notification
+  showNotification('New Outpass Request', data.message);
+  
+  // Update pending requests list
+  refreshPendingRequests();
+  
+  // Play notification sound
+  playNotificationSound();
+});
+                </div>
+
+                <h4>2. Outpass Approved Event</h4>
+                <div class="code-block">
+// Server-side
+socketService.emitToUser(
+  outpass.student,
+  'outpass:approved',
+  {
+    outpass: outpass,
+    message: 'Your outpass has been approved!'
+  }
+);
+
+socketService.emitToRole(
+  'security',
+  'outpass:approved',
+  {
+    outpass: outpass,
+    message: 'New approved outpass available'
+  }
+);
+
+// Client-side
+socket.on('outpass:approved', (data) => {
+  // Show success notification
+  toast.success(data.message);
+  
+  // Update outpass status in UI
+  updateOutpassStatus(data.outpass.id, 'approved');
+  
+  // Enable PDF download button
+  enablePDFDownload(data.outpass.id);
+});
+                </div>
+
+                <h4>3. Real-time Notification Count</h4>
+                <div class="code-block">
+// Server-side
+const unreadCount = await Notification.countDocuments({
+  user: userId,
+  isRead: false
+});
+
+socketService.emitToUser(
+  userId,
+  'notification:unread_count',
+  { count: unreadCount }
+);
+
+// Client-side
+socket.on('notification:unread_count', (data) => {
+  // Update badge count
+  updateNotificationBadge(data.count);
+});
+                </div>
+
+                <h3>Connection Management</h3>
+                <div class="code-block">
+// Reconnection Strategy
+socket.on('disconnect', (reason) => {
+  if (reason === 'io server disconnect') {
+    // Server disconnected, manual reconnect
+    socket.connect();
+  }
+  // Otherwise, Socket.io will auto-reconnect
+});
+
+// Connection Error Handling
+socket.on('connect_error', (error) => {
+  console.error('Connection failed:', error);
+  // Show offline indicator
+  showOfflineStatus();
+});
+
+// Successful Reconnection
+socket.on('reconnect', (attemptNumber) => {
+  console.log('Reconnected after', attemptNumber, 'attempts');
+  // Sync missed notifications
+  fetchMissedNotifications();
+});
+                </div>
+
+                <h3>Security Considerations</h3>
+                <div class="warning-box">
+                    <strong>Security Measures:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>JWT authentication on handshake</li>
+                        <li>Room-based access control</li>
+                        <li>Event validation and sanitization</li>
+                        <li>Rate limiting on socket events</li>
+                        <li>CORS configuration for WebSocket</li>
+                        <li>Encrypted data transmission</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 9: BEST PRACTICES -->
+            <section id="best-practices">
+                <h2>✨ Best Practices & Patterns</h2>
+
+                <h3>1. Error Handling</h3>
+                <div class="code-block">
+// Centralized Error Handler (error.middleware.ts)
+export const errorHandler = (
+  error: Error,
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  // Log error
+  logger.error({
+    error: error.message,
+    stack: error.stack,
+    path: request.url,
+    method: request.method
+  });
+
+  // Determine status code
+  const statusCode = error.statusCode || 500;
+
+  // Send response
+  reply.code(statusCode).send({
+    success: false,
+    error: error.message,
+    ...(process.env.NODE_ENV === 'development' && {
+      stack: error.stack
+    })
+  });
+};
+
+// Usage in Controllers
+try {
+  const result = await service.doSomething();
+  return reply.send({ success: true, data: result });
+} catch (error) {
+  throw new Error('Operation failed: ' + error.message);
+}
+                </div>
+
+                <h3>2. Input Validation</h3>
+                <div class="code-block">
+// Using Zod for Schema Validation
+import { z } from 'zod';
+
+const createOutpassSchema = z.object({
+  type: z.enum(['local', 'home', 'emergency', 'medical', 'other']),
+  purpose: z.string().min(10).max(500),
+  destination: z.string().min(3).max(200),
+  fromDate: z.string().datetime(),
+  toDate: z.string().datetime()
+}).refine(
+  (data) => new Date(data.toDate) > new Date(data.fromDate),
+  { message: 'Return date must be after departure date' }
+);
+
+// Validation Middleware
+export const validateRequest = (schema: z.ZodSchema) => {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      schema.parse(request.body);
+    } catch (error) {
+      return reply.code(400).send({
+        success: false,
+        error: 'Validation failed',
+        details: error.errors
+      });
+    }
+  };
+};
+                </div>
+
+                <h3>3. Authentication Middleware</h3>
+                <div class="code-block">
+// JWT Verification
+export const authenticate = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  try {
+    // Extract token
+    const token = request.headers.authorization?.replace('Bearer ', '');
+    
+    if (!token) {
+      return reply.code(401).send({
+        success: false,
+        error: 'No token provided'
+      });
+    }
+
+    // Verify token
+    const decoded = await request.server.jwt.verify(token);
+    
+    // Attach user to request
+    request.user = decoded;
+    
+  } catch (error) {
+    return reply.code(401).send({
+      success: false,
+      error: 'Invalid or expired token'
+    });
+  }
+};
+
+// Role-based Authorization
+export const authorize = (...roles: UserRole[]) => {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    if (!roles.includes(request.user.role)) {
+      return reply.code(403).send({
+        success: false,
+        error: 'Insufficient permissions'
+      });
+    }
+  };
+};
+                </div>
+
+                <h3>4. Database Queries</h3>
+                <div class="code-block">
+// Efficient Queries with Mongoose
+
+// ❌ Bad: Multiple queries
+const student = await User.findById(studentId);
+const outpasses = await Outpass.find({ student: studentId });
+const notifications = await Notification.find({ user: studentId });
+
+// ✅ Good: Single query with population
+const student = await User.findById(studentId)
+  .populate('outpasses')
+  .populate('notifications')
+  .lean(); // Convert to plain JS object
+
+// ✅ Good: Pagination
+const outpasses = await Outpass.find({ student: studentId })
+  .sort({ createdAt: -1 })
+  .limit(20)
+  .skip(page * 20)
+  .select('outpassNumber type status fromDate toDate')
+  .lean();
+
+// ✅ Good: Aggregation for statistics
+const stats = await Outpass.aggregate([
+  { $match: { student: studentId } },
+  {
+    $group: {
+      _id: '$status',
+      count: { $sum: 1 }
+    }
+  }
+]);
+                </div>
+
+                <h3>5. Async/Await Patterns</h3>
+                <div class="code-block">
+// ✅ Good: Parallel execution
+const [user, outpasses, notifications] = await Promise.all([
+  User.findById(userId),
+  Outpass.find({ student: userId }),
+  Notification.find({ user: userId })
+]);
+
+// ✅ Good: Sequential with error handling
+try {
+  const outpass = await OutpassService.create(data);
+  const qrCode = await QRService.generate(outpass.id);
+  await EmailService.sendApproval(outpass);
+  await SocketService.emit('outpass:created', outpass);
+} catch (error) {
+  // Rollback if needed
+  await OutpassService.delete(outpass.id);
+  throw error;
+}
+                </div>
+
+                <h3>6. Environment Configuration</h3>
+                <div class="code-block">
+// config/index.ts
+export const config = {
+  port: parseInt(process.env.PORT || '3000'),
+  mongoUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/campuspass',
+  jwtSecret: process.env.JWT_SECRET || 'change-in-production',
+  jwtExpiry: process.env.JWT_EXPIRES_IN || '7d',
+  
+  smtp: {
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+    from: process.env.SMTP_FROM
+  },
+  
+  cors: {
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+  }
+};
+
+// Validation
+if (!config.jwtSecret || config.jwtSecret === 'change-in-production') {
+  console.warn('⚠️  Using default JWT secret. Change in production!');
+}
+                </div>
+
+                <h3>7. Logging Strategy</h3>
+                <div class="code-block">
+// utils/logger.ts
+import winston from 'winston';
+
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
+
+// Development logging
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple()
+  }));
+}
+
+// Usage
+logger.info('Server started', { port: 3000 });
+logger.error('Database connection failed', { error: error.message });
+logger.warn('Rate limit exceeded', { ip: request.ip });
+                </div>
+            </section>
+
+            <!-- SECTION 10: DEPLOYMENT -->
+            <section id="deployment">
+                <h2>🚀 Deployment Guide</h2>
+
+                <h3>Environment Setup</h3>
+                <div class="code-block">
+# Production .env
+NODE_ENV=production
+PORT=3000
+HOST=0.0.0.0
+
+# Database
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/campuspass
+
+# JWT
+JWT_SECRET=your-super-secret-key-min-32-chars
+JWT_EXPIRES_IN=7d
+
+# CORS
+FRONTEND_URL=https://your-frontend-domain.com
+
+# Email (Optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+SMTP_FROM=Campus Pass <noreply@campuspass.com>
+
+# Logging
+LOG_LEVEL=info
+                </div>
+
+                <h3>Build & Start</h3>
+                <div class="code-block">
+# Install dependencies
+npm install --production
+
+# Build TypeScript
+npm run build
+
+# Start server
+npm start
+
+# Or use PM2 for process management
+pm2 start dist/index.js --name campuspass-backend
+pm2 save
+pm2 startup
+                </div>
+
+                <h3>Docker Deployment</h3>
+                <div class="code-block">
+# Dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["node", "dist/index.js"]
+
+# Build and run
+docker build -t campuspass-backend .
+docker run -p 3000:3000 --env-file .env campuspass-backend
+                </div>
+
+                <h3>Health Checks</h3>
+                <div class="code-block">
+# Health endpoint
+GET /health
+
+Response:
+{
+  "status": "ok",
+  "timestamp": "2024-01-01T12:00:00.000Z",
+  "uptime": 3600,
+  "database": "connected",
+  "memory": {
+    "used": "150MB",
+    "total": "512MB"
+  }
+}
+                </div>
+
+                <h3>Monitoring</h3>
+                <div class="info-box">
+                    <strong>Recommended Tools:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>PM2:</strong> Process management and monitoring</li>
+                        <li><strong>Winston:</strong> Structured logging</li>
+                        <li><strong>MongoDB Atlas:</strong> Database monitoring</li>
+                        <li><strong>Sentry:</strong> Error tracking</li>
+                        <li><strong>New Relic:</strong> Performance monitoring</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 11: TESTING -->
+            <section id="testing">
+                <h2>🧪 Testing Strategy</h2>
+
+                <h3>Test Structure</h3>
+                <div class="folder-structure">
+                    <pre>
+__tests__/
+├── setup.ts              # Test configuration
+├── helpers/
+│   └── faker-mock.ts     # Mock data generators
+├── unit/                 # Unit tests
+│   ├── auth.service.test.ts
+│   ├── outpass.service.test.ts
+│   └── middleware.test.ts
+└── integration/          # Integration tests
+    ├── auth.routes.test.ts
+    ├── outpass.routes.test.ts
+    └── security.routes.test.ts
+                    </pre>
+                </div>
+
+                <h3>Unit Test Example</h3>
+                <div class="code-block">
+// auth.service.test.ts
+import { AuthService } from '../services/AuthService';
+import { User } from '../models/User';
+
+describe('AuthService', () => {
+  describe('register', () => {
+    it('should create a new user with hashed password', async () => {
+      const userData = {
+        email: 'test@example.com',
+        password: 'password123',
+        name: 'Test User',
+        role: 0
+      };
+
+      const user = await AuthService.register(userData);
+
+      expect(user.email).toBe(userData.email);
+      expect(user.password).not.toBe(userData.password);
+      expect(user.password).toMatch(/^\$2[aby]\$/); // bcrypt hash
+    });
+
+    it('should throw error for duplicate email', async () => {
+      const userData = {
+        email: 'existing@example.com',
+        password: 'password123',
+        name: 'Test User',
+        role: 0
+      };
+
+      await AuthService.register(userData);
+
+      await expect(
+        AuthService.register(userData)
+      ).rejects.toThrow('Email already exists');
+    });
+  });
+});
+                </div>
+
+                <h3>Integration Test Example</h3>
+                <div class="code-block">
+// auth.routes.test.ts
+import request from 'supertest';
+import { buildServer } from '../server';
+
+describe('Auth Routes', () => {
+  let app;
+
+  beforeAll(async () => {
+    app = await buildServer();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  describe('POST /api/auth/login', () => {
+    it('should login with valid credentials', async () => {
+      const response = await request(app.server)
+        .post('/api/auth/login')
+        .send({
+          email: 'student@example.com',
+          password: 'password123'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.data.token).toBeDefined();
+      expect(response.body.data.user.email).toBe('student@example.com');
+    });
+
+    it('should reject invalid credentials', async () => {
+      const response = await request(app.server)
+        .post('/api/auth/login')
+        .send({
+          email: 'student@example.com',
+          password: 'wrongpassword'
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body.success).toBe(false);
+    });
+  });
+});
+                </div>
+
+                <h3>Running Tests</h3>
+                <div class="code-block">
+# Run all tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run in watch mode
+npm run test:watch
+
+# Run specific test file
+npm test -- auth.service.test.ts
+                </div>
+            </section>
+
+            <!-- SECTION 12: TROUBLESHOOTING -->
+            <section id="troubleshooting">
+                <h2>🔧 Troubleshooting Guide</h2>
+
+                <h3>Common Issues</h3>
+
+                <div class="warning-box">
+                    <h4>Issue: MongoDB Connection Failed</h4>
+                    <p><strong>Error:</strong> MongooseServerSelectionError: connect ECONNREFUSED</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Check if MongoDB is running: <code>mongod --version</code></li>
+                        <li>Verify MONGODB_URI in .env file</li>
+                        <li>Check network connectivity</li>
+                        <li>Ensure MongoDB port (27017) is not blocked</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Issue: JWT Token Invalid</h4>
+                    <p><strong>Error:</strong> JsonWebTokenError: invalid signature</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Ensure JWT_SECRET matches between frontend and backend</li>
+                        <li>Check token expiration (JWT_EXPIRES_IN)</li>
+                        <li>Verify token format: "Bearer {token}"</li>
+                        <li>Clear browser localStorage and re-login</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Issue: CORS Error</h4>
+                    <p><strong>Error:</strong> Access-Control-Allow-Origin header missing</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Set FRONTEND_URL in .env to match frontend origin</li>
+                        <li>Enable credentials: true in CORS config</li>
+                        <li>Check if frontend is running on correct port</li>
+                        <li>Verify CORS middleware is registered before routes</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Issue: Socket.io Not Connecting</h4>
+                    <p><strong>Error:</strong> WebSocket connection failed</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Check if server is running on correct port</li>
+                        <li>Verify JWT token is included in handshake</li>
+                        <li>Check firewall/proxy settings</li>
+                        <li>Enable transports: ['websocket', 'polling']</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Issue: Email Not Sending</h4>
+                    <p><strong>Error:</strong> SMTP connection failed</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Verify SMTP credentials in .env</li>
+                        <li>Enable "Less secure app access" for Gmail</li>
+                        <li>Use App Password instead of regular password</li>
+                        <li>Check SMTP_PORT (587 for TLS, 465 for SSL)</li>
+                    </ul>
+                </div>
+
+                <h3>Debug Mode</h3>
+                <div class="code-block">
+# Enable debug logging
+LOG_LEVEL=debug npm run dev
+
+# Check server logs
+tail -f combined.log
+
+# Monitor MongoDB queries
+mongoose.set('debug', true);
+
+# Test API endpoints
+curl -X GET http://localhost:3000/health
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"password123"}'
+                </div>
+            </section>
+
+            <!-- SECTION 13: SUMMARY -->
+            <section id="summary">
+                <h2>📚 Quick Reference Summary</h2>
+
+                <h3>Technology Stack</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Technology</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Runtime</td>
+                            <td>Node.js 18+</td>
+                            <td>JavaScript runtime</td>
+                        </tr>
+                        <tr>
+                            <td>Language</td>
+                            <td>TypeScript</td>
+                            <td>Type-safe development</td>
+                        </tr>
+                        <tr>
+                            <td>Framework</td>
+                            <td>Fastify</td>
+                            <td>High-performance web server</td>
+                        </tr>
+                        <tr>
+                            <td>Database</td>
+                            <td>MongoDB + Mongoose</td>
+                            <td>NoSQL data storage</td>
+                        </tr>
+                        <tr>
+                            <td>Authentication</td>
+                            <td>JWT + bcrypt</td>
+                            <td>Secure auth & password hashing</td>
+                        </tr>
+                        <tr>
+                            <td>Real-time</td>
+                            <td>Socket.io</td>
+                            <td>WebSocket communication</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>Nodemailer</td>
+                            <td>SMTP email service</td>
+                        </tr>
+                        <tr>
+                            <td>PDF</td>
+                            <td>PDFKit</td>
+                            <td>Document generation</td>
+                        </tr>
+                        <tr>
+                            <td>QR Code</td>
+                            <td>qrcode</td>
+                            <td>QR code generation</td>
+                        </tr>
+                        <tr>
+                            <td>Validation</td>
+                            <td>Zod</td>
+                            <td>Schema validation</td>
+                        </tr>
+                        <tr>
+                            <td>Testing</td>
+                            <td>Jest + Supertest</td>
+                            <td>Unit & integration tests</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Key Concepts</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Layered Architecture</h4>
+                        <p>Routes → Middleware → Controllers → Services → Models → Database</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Role-Based Access</h4>
+                        <p>Student (0), Admin (1), Warden (2), Security (3)</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Outpass Lifecycle</h4>
+                        <p>PENDING → APPROVED → CHECKED_OUT → CHECKED_IN</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <h4>Real-time Events</h4>
+                        <p>Socket.io rooms for instant notifications</p>
+                    </div>
+                </div>
+
+                <h3>Important Commands</h3>
+                <div class="code-block">
+# Development
+npm run dev              # Start dev server with hot reload
+
+# Production
+npm run build            # Compile TypeScript
+npm start                # Start production server
+
+# Testing
+npm test                 # Run all tests
+npm run test:coverage    # Run tests with coverage
+
+# Database
+npm run seed             # Seed database with sample data
+
+# Utilities
+npm run lint             # Check code quality
+npm run format           # Format code with Prettier
+                </div>
+
+                <h3>Project Highlights</h3>
+                <div class="success-box">
+                    <ul style="margin-left: 20px;">
+                        <li>✅ <strong>Type-Safe:</strong> Full TypeScript implementation</li>
+                        <li>✅ <strong>Secure:</strong> JWT auth, bcrypt hashing, Helmet security</li>
+                        <li>✅ <strong>Real-time:</strong> Socket.io for instant updates</li>
+                        <li>✅ <strong>Scalable:</strong> Layered architecture, service-oriented</li>
+                        <li>✅ <strong>Tested:</strong> Unit and integration test coverage</li>
+                        <li>✅ <strong>Documented:</strong> Comprehensive API documentation</li>
+                        <li>✅ <strong>Production-Ready:</strong> Error handling, logging, monitoring</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>📖 Additional Resources</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><a href="backend/README.md" style="color: #667eea;">Backend README</a></li>
+                        <li><a href="backend/API_DOCUMENTATION.md" style="color: #667eea;">API Documentation</a></li>
+                        <li><a href="backend/SOCKET_IO_DOCUMENTATION.md" style="color: #667eea;">Socket.io Guide</a></li>
+                        <li><a href="backend/QUICK_START.md" style="color: #667eea;">Quick Start Guide</a></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Campus Pass Backend Documentation</p>
+            <p>Built with ❤️ using Node.js, TypeScript, Fastify, MongoDB & Socket.io</p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                For support: <a href="mailto:ajaykrishnatech@gmail.com" style="color: #a0aec0;">ajaykrishnatech@gmail.com</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = '';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.background = '#667eea';
+                }
+            });
+        });
+
+        // Add copy button to code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            const button = document.createElement('button');
+            button.textContent = 'Copy';
+            button.style.cssText = 'position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;';
+            
+            block.style.position = 'relative';
+            block.appendChild(button);
+            
+            button.addEventListener('click', () => {
+                const code = block.textContent.replace('Copy', '').trim();
+                navigator.clipboard.writeText(code);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+        });
+    </script>
+</body>
+</html>
